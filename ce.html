@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Energy Awareness Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for font and form-radio/textarea focus */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth; /* Smooth scrolling for potential anchors */
+        }
+        /* Basic styling for form elements not covered by Tailwind defaults */
+        .form-radio {
+            appearance: none;
+            display: inline-block;
+            vertical-align: middle;
+            height: 1.25rem;
+            width: 1.25rem;
+            border-radius: 9999px; /* Full rounded for radio */
+            border-width: 1px;
+            border-color: #D1D5DB; /* gray-300 */
+            background-color: #FFFFFF;
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+        }
+        .form-radio:checked {
+            background-color: #10B981; /* green-600 */
+            border-color: #10B981;
+        }
+        .form-radio:checked:after {
+            content: '';
+            display: block;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin: 0.25rem;
+            border-radius: 9999px;
+            background: #FFFFFF;
+        }
+        .form-radio:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5); /* green-600 with opacity */
+        }
+
+        /* Keyframe for subtle pulsate */
+        @keyframes pulsate {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        .animate-pulsate-subtle {
+            animation: pulsate 2s infinite ease-in-out;
+        }
+
+        /* Keyframe for bounce on header icon */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(-25%);
+                animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+            }
+            50% {
+                transform: translateY(0);
+                animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+            }
+        }
+        .animate-bounce-subtle {
+            animation: bounce 1.5s infinite;
+        }
+
+        /* Keyframe for subtle shake to highlight impact */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        .animate-shake-subtle {
+            animation: shake 0.8s ease-in-out infinite alternate;
+        }
+
+        /* SVG transition styles for visualizer */
+        .svg-transition {
+            transition: all 1s ease-in-out;
+        }
+        .hidden-element {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        .visible-element {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-green-100 via-blue-100 to-purple-100 flex flex-col items-center p-4 sm:p-6 lg:p-8">
+
+    <!-- Header -->
+    <header class="w-full max-w-4xl bg-white p-6 rounded-3xl shadow-xl mb-8 text-center border-b-4 border-green-400 transform hover:scale-102 transition-transform duration-300">
+        <h1 id="app-title" class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-green-800 mb-2 drop-shadow-md flex items-center justify-center">
+            <svg class="w-10 h-10 mr-3 text-green-600 animate-bounce-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9a1 1 0 00-1 1v3a1 1 0 102 0v-3a1 1 0 00-1-1z" clipRule="evenodd"></path></svg>
+            Clean Energy Awareness Hub
+        </h1>
+        <p id="tagline" class="text-xl sm:text-2xl text-gray-700 font-medium italic">
+            Empowering communities with sustainable knowledge and action
+        </p>
+
+        <!-- Language Selector -->
+        <div class="mt-6 flex justify-center items-center gap-2">
+            <label for="language-select" id="language-selector" class="text-gray-700 font-semibold text-lg">
+                Select Language:
+            </label>
+            <select
+                id="language-select"
+                class="p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500 text-base"
+                onchange="changeLanguage(this.value)"
+            >
+                <option value="en">English</option>
+                <option value="hi">हिन्दी</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+                <option value="ta">தமிழ்</option>
+                <option value="ml">മലയാളം</option>
+                <option value="te">తెలుగు</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- About Clean Energy Section (now includes tips) -->
+        <section class="bg-white p-8 rounded-3xl shadow-xl border-b-4 border-blue-400 md:col-span-2 transform hover:scale-102 transition-transform duration-300">
+            <h2 id="about-title" class="text-3xl sm:text-4xl font-bold text-blue-800 mb-6 flex items-center">
+                <svg class="w-9 h-9 mr-3 text-blue-600 animate-pulsate-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd"></path></svg>
+                About Clean Energy
+            </h2>
+            <p id="about-content" class="text-gray-700 leading-relaxed text-lg mb-8">
+                Clean energy sources are crucial for reducing carbon emissions, combating climate change, and ensuring a sustainable future. They harness natural processes like sunlight, wind, water, and geothermal heat, producing little to no greenhouse gases or pollutants during operation. Unlike fossil fuels, which are finite and contribute to air pollution, clean energy offers an inexhaustible and environmentally friendly alternative. Adopting clean energy not only protects our planet but also fosters energy independence, creates green jobs, and can lead to long-term economic savings for households and industries.
+            </p>
+
+            <h3 id="practical-tips-subtitle" class="text-2xl sm:text-3xl font-bold text-orange-700 mb-6 flex items-center">
+                <svg class="w-8 h-8 mr-2 text-orange-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+                Practical Energy Saving Tips for Your Home
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tip 1 -->
+                <div class="bg-orange-50 p-5 rounded-xl border border-orange-200 shadow-sm hover:shadow-md transition-shadow transform hover:-translate-y-1">
+                    <h4 id="tip1-title" class="text-xl font-semibold text-orange-800 mb-2">Switch to LEDs</h4>
+                    <p id="tip1-content" class="text-gray-700 text-base">Replace incandescent bulbs with energy-efficient LED lighting. LEDs consume up to 80% less energy, last much longer (often 15-25 years), and save money on electricity bills.</p>
+                </div>
+                <!-- Tip 2 -->
+                <div class="bg-orange-50 p-5 rounded-xl border border-orange-200 shadow-sm hover:shadow-md transition-shadow transform hover:-translate-y-1">
+                    <h4 id="tip2-title" class="text-xl font-semibold text-orange-800 mb-2">Unplug 'Vampire' Electronics</h4>
+                    <p id="tip2-content" class="text-gray-700 text-base">Many electronics (chargers, TVs, computers, appliances) consume 'phantom' or 'vampire' energy even when turned off or in standby mode. Unplug them or use smart power strips to cut off power completely.</p>
+                </div>
+                <!-- Tip 3 -->
+                <div class="bg-orange-50 p-5 rounded-xl border border-orange-200 shadow-sm hover:shadow-md transition-shadow transform hover:-translate-y-1">
+                    <h4 id="tip3-title" class="text-xl font-semibold text-orange-800 mb-2">Optimize Thermostat Settings</h4>
+                    <p id="tip3-content" class="text-gray-700 text-base">Adjust your thermostat a few degrees higher in summer and lower in winter. Programmable or smart thermostats can automate this, saving significant heating and cooling costs.</p>
+                </div>
+                <!-- Tip 4 -->
+                <div class="bg-orange-50 p-5 rounded-xl border border-orange-200 shadow-sm hover:shadow-md transition-shadow transform hover:-translate-y-1">
+                    <h4 id="tip4-title" class="text-xl font-semibold text-orange-800 mb-2">Seal Air Leaks & Insulate</h4>
+                    <p id="tip4-content" class="text-gray-700 text-base">Check for drafts around windows, doors, outlets, and attics. Sealing these leaks with caulk, weatherstripping, or adding insulation can drastically improve your home's energy efficiency and comfort.</p>
+                </div>
+                <!-- Tip 5 -->
+                <div class="bg-orange-50 p-5 rounded-xl border border-orange-200 shadow-sm hover:shadow-md transition-shadow transform hover:-translate-y-1">
+                    <h4 id="tip5-title" class="text-xl font-semibold text-orange-800 mb-2">Efficient Appliance Choices</h4>
+                    <p id="tip5-content" class="text-gray-700 text-base">When replacing old appliances, look for ENERGY STAR® certified models. They are designed to be significantly more energy-efficient, saving water and electricity.</p>
+                </div>
+                <!-- Tip 6 -->
+                <div class="bg-orange-50 p-5 rounded-xl border border-orange-200 shadow-sm hover:shadow-md transition-shadow transform hover:-translate-y-1">
+                    <h4 id="tip6-title" class="text-xl font-semibold text-orange-800 mb-2">Utilize Natural Light & Ventilation</h4>
+                    <p id="tip6-content" class="text-gray-700 text-base">Maximize natural daylight by opening curtains and blinds. Use natural ventilation (opening windows) instead of air conditioning when the weather permits.</p>
+                </div>
+                <!-- Tip 7 -->
+                <div class="bg-orange-50 p-5 rounded-xl border border-orange-200 shadow-sm hover:shadow-md transition-shadow transform hover:-translate-y-1">
+                    <h4 id="tip7-title" class="text-xl font-semibold text-orange-800 mb-2">Maintain HVAC Systems</h4>
+                    <p id="tip7-content" class="text-gray-700 text-base">Regularly clean or replace HVAC filters and get your heating and cooling systems professionally serviced annually for optimal efficiency and longevity.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Clean Energy Matters Section -->
+        <section class="bg-white p-8 rounded-3xl shadow-xl border-b-4 border-teal-400 transform hover:scale-102 transition-transform duration-300">
+            <h2 id="why-matter-title" class="text-3xl sm:text-4xl font-bold text-teal-800 mb-6 flex items-center">
+                <svg class="w-9 h-9 mr-3 text-teal-600 animate-pulsate-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd"></path></svg>
+                Why Clean Energy Matters for Our Community
+            </h2>
+            <p id="why-matter-content" class="text-gray-700 leading-relaxed text-lg">
+                Transitioning to clean energy brings a multitude of benefits directly to our local communities. It leads to cleaner air, improving public health and reducing respiratory illnesses. Locally sourced renewable energy can boost our economy by creating new jobs in installation, maintenance, and manufacturing. Furthermore, it enhances energy security, making our community less vulnerable to price fluctuations and supply disruptions of traditional fuels. By embracing clean energy, we invest in a healthier environment, a stronger economy, and a more resilient future for everyone.
+            </p>
+        </section>
+
+        <!-- Sustainability & Our Collective Future Section -->
+        <section class="bg-white p-8 rounded-3xl shadow-xl border-b-4 border-pink-400 transform hover:scale-102 transition-transform duration-300">
+            <h2 id="sustainability-title" class="text-3xl sm:text-4xl font-bold text-pink-800 mb-6 flex items-center">
+                <svg class="w-9 h-9 mr-3 text-pink-600 animate-pulsate-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a1 1 0 011-1h14a1 1 0 110 2H3a1 1 0 01-1-1zM5 15a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"></path></svg>
+                Sustainability & Our Collective Future
+            </h2>
+            <p id="sustainability-content-1" class="text-gray-700 leading-relaxed text-lg mb-4">
+                Sustainability is about meeting the needs of the present without compromising the ability of future generations to meet their own needs. It encompasses three core pillars: **environmental protection**, **social equity**, and **economic viability**. It's a holistic approach to living, consuming, and producing.
+            </p>
+            <p id="sustainability-content-2" class="text-gray-700 leading-relaxed text-lg">
+                Embracing sustainability means adopting practices like waste reduction (reduce, reuse, recycle), conserving water, supporting local and ethical businesses, and promoting biodiversity. By working together, we can build resilient communities that thrive in harmony with our planet, ensuring a prosperous future for everyone.
+            </p>
+        </section>
+
+        <!-- The Impact of Conventional Energy Section -->
+        <section class="md:col-span-2 bg-white p-8 rounded-3xl shadow-xl border-b-4 border-red-500 transform hover:scale-102 transition-transform duration-300">
+            <h2 id="impact-conventional-title" class="text-3xl sm:text-4xl font-bold text-red-800 mb-6 flex items-center justify-center text-center">
+                <svg class="w-9 h-9 mr-3 text-red-600 animate-shake-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"></path></svg>
+                The Impact of Conventional Energy
+            </h2>
+            <p id="impact-conventional-content-1" class="text-gray-700 leading-relaxed text-lg mb-4">
+                Our reliance on conventional energy sources like fossil fuels (coal, oil, natural gas) comes at a significant environmental and health cost. Burning these fuels releases large quantities of greenhouse gases, primarily carbon dioxide, which trap heat in the atmosphere and drive climate change. This leads to rising global temperatures, more extreme weather events, rising sea levels, and devastating impacts on ecosystems and biodiversity.
+            </p>
+            <p id="impact-conventional-content-2" class="text-gray-700 leading-relaxed text-lg mb-4">
+                Beyond climate change, fossil fuel combustion also produces harmful air pollutants such as particulate matter, sulfur dioxide, and nitrogen oxides. These pollutants contribute to respiratory illnesses, heart disease, and premature deaths, especially in urban areas and communities near power plants. The extraction and transportation of these fuels also carry risks, including oil spills, habitat destruction, and water contamination.
+            </p>
+            <p id="impact-conventional-content-3" class="text-gray-700 leading-relaxed text-lg">
+                Furthermore, fossil fuels are finite resources, meaning their supply is limited. This creates energy insecurity, subjecting economies to volatile price fluctuations and geopolitical tensions. Shifting away from these damaging sources towards clean, renewable energy is essential not only for environmental protection but for public health, economic stability, and global peace.
+            </p>
+        </section>
+
+        <!-- Interactive Energy Transition Visualizer (NEW) -->
+        <section class="md:col-span-2 bg-white p-8 rounded-3xl shadow-xl border-b-4 border-yellow-500 flex flex-col items-center justify-center transform hover:scale-102 transition-transform duration-300">
+            <h2 id="visualizer-title" class="text-3xl sm:text-4xl font-bold text-yellow-800 mb-6 flex items-center justify-center text-center">
+                <svg class="w-9 h-9 mr-3 text-yellow-600 animate-pulsate-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+                Visualize the Transition to Clean Energy
+            </h2>
+            <p id="visualizer-instruction" class="text-gray-700 text-lg mb-6 text-center">
+                Click the button to see the contrast between conventional and clean energy impacts!
+            </p>
+            <div class="relative w-full max-w-lg h-64 sm:h-80 bg-gray-100 rounded-xl overflow-hidden mb-6 shadow-inner">
+                <svg viewBox="0 0 400 200" class="absolute inset-0 w-full h-full">
+                    <!-- Base elements always visible -->
+                    <rect x="0" y="0" width="400" height="200" fill="#ADD8E6" id="sky-color" class="svg-transition"></rect> <!-- Light blue sky -->
+                    <rect x="0" y="150" width="400" height="50" fill="#8B4513" id="ground-color" class="svg-transition"></rect> <!-- Brown ground -->
+
+                    <!-- Conventional Energy elements (initially visible) -->
+                    <g id="conventional-scene" class="visible-element svg-transition">
+                        <!-- Factory smokestack -->
+                        <rect x="150" y="80" width="30" height="70" fill="#6B7280"></rect>
+                        <rect x="140" y="70" width="50" height="10" fill="#6B7280"></rect>
+                        <circle cx="165" cy="80" r="15" fill="#6B7280"></circle>
+                        <!-- Smoke -->
+                        <path d="M165 70 Q180 50 170 30 T160 10" stroke="#A0A0A0" stroke-width="8" fill="none" opacity="0.8">
+                            <animate attributeName="d"
+                                     from="M165 70 Q180 50 170 30 T160 10"
+                                     to="M165 70 Q190 30 180 0 T170 -20"
+                                     dur="4s" repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0.8;0.3;0.8" dur="4s" repeatCount="indefinite" />
+                        </path>
+                        <path d="M175 70 Q190 50 180 30 T170 10" stroke="#B0B0B0" stroke-width="6" fill="none" opacity="0.6" delay="1s">
+                            <animate attributeName="d"
+                                     from="M175 70 Q190 50 180 30 T170 10"
+                                     to="M175 70 Q200 30 190 0 T180 -20"
+                                     dur="4s" repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0.6;0.2;0.6" dur="4s" repeatCount="indefinite" />
+                        </path>
+
+                        <!-- Barren Tree -->
+                        <rect x="250" y="90" width="8" height="60" fill="#5A3E2A"></rect>
+                        <path d="M254 90 L240 70 L268 70 L254 90" fill="#5A3E2A"></path>
+                        <path d="M254 80 L235 60 L273 60 L254 80" fill="#5A3E2A"></path>
+                    </g>
+
+                    <!-- Clean Energy elements (initially hidden) -->
+                    <g id="clean-scene" class="hidden-element svg-transition">
+                        <!-- Sun -->
+                        <circle cx="350" cy="50" r="30" fill="#FFD700" class="svg-transition"></circle>
+                        <!-- Solar Panel -->
+                        <rect x="10" y="110" width="80" height="40" fill="#4B5563" rx="5" class="svg-transition"></rect>
+                        <rect x="15" y="115" width="70" height="30" fill="#6EE7B7" rx="3" class="svg-transition"></rect>
+                        <!-- Wind Turbine -->
+                        <rect x="300" y="80" width="8" height="70" fill="#6B7280" class="svg-transition"></rect>
+                        <path d="M304 80 L320 60 L304 40 L288 60 Z" fill="#E5E7EB" class="svg-transition"></path>
+                        <path d="M304 80 L320 100 L304 120 L288 100 Z" fill="#E5E7EB" class="svg-transition"></path>
+                        <path d="M304 80 L288 60 L304 40 L320 60 Z" fill="#E5E7EB" class="svg-transition" transform="rotate(120 304 80)"></path>
+                        <path d="M304 80 L288 100 L304 120 L320 100 Z" fill="#E5E7EB" class="svg-transition" transform="rotate(240 304 80)"></path>
+
+                        <!-- Healthy Tree -->
+                        <rect x="250" y="90" width="10" height="60" fill="#228B22" class="svg-transition"></rect>
+                        <circle cx="255" cy="80" r="25" fill="#32CD32" class="svg-transition"></circle>
+                    </g>
+                </svg>
+            </div>
+            <button
+                id="toggle-visualizer-btn"
+                onclick="toggleEnergyVisualizer()"
+                class="mt-4 px-8 py-4 rounded-full font-bold text-xl transition-all duration-300 transform hover:scale-105 active:scale-95
+                        bg-gradient-to-r from-yellow-500 to-amber-600 text-white shadow-lg hover:from-yellow-600 hover:to-amber-700"
+            >
+                See Clean Energy!
+            </button>
+        </section>
+
+
+        <!-- Share Your Green Idea! Section (NEW) -->
+        <section class="md:col-span-2 bg-white p-8 rounded-3xl shadow-xl border-b-4 border-lime-500 transform hover:scale-102 transition-transform duration-300">
+            <h2 id="share-idea-title" class="text-3xl sm:text-4xl font-bold text-lime-800 mb-6 flex items-center">
+                <svg class="w-9 h-9 mr-3 text-lime-600 animate-pulsate-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Share Your Green Idea!
+            </h2>
+            <p id="share-idea-instruction" class="text-gray-700 italic text-lg mb-4">
+                Have a great idea for promoting clean energy or sustainability in your community? Share it with us!
+            </p>
+            <form id="idea-form" class="space-y-4">
+                <div>
+                    <label for="idea-text" id="idea-label" class="block text-gray-800 font-semibold mb-2">Your Idea:</label>
+                    <textarea
+                        id="idea-text"
+                        name="idea"
+                        rows="5"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-lime-500 focus:border-lime-500 text-lg"
+                        placeholder="e.g., Organize a community clean-up, start a local composting program..."
+                        required
+                    ></textarea>
+                </div>
+                <div class="flex items-center gap-4">
+                    <label for="idea-name" id="idea-name-label" class="text-gray-800 font-semibold">Your Name (Optional):</label>
+                    <input type="text" id="idea-name" name="name" class="flex-grow p-2 border border-gray-300 rounded-lg focus:ring-lime-500 focus:border-lime-500 text-base" placeholder="Anonymous">
+                </div>
+                <button
+                    type="submit"
+                    id="submit-idea-btn"
+                    class="w-full px-8 py-4 rounded-full font-bold text-xl bg-lime-600 text-white shadow-lg hover:bg-lime-700 transition-colors transform hover:scale-105 active:scale-95"
+                >
+                    Submit Idea
+                </button>
+            </form>
+            <div id="submitted-ideas-container" class="mt-8 pt-6 border-t border-gray-200">
+                <h3 id="ideas-shared-title" class="text-2xl font-bold text-lime-700 mb-4">Ideas Shared by the Community:</h3>
+                <ul id="ideas-list" class="space-y-4">
+                    <!-- Ideas will be dynamically added here -->
+                    <li class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                        <p class="text-gray-800 italic">"Starting a local repair café to reduce waste." <span class="font-semibold text-gray-600">- Admin</span></p>
+                    </li>
+                    <li class="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                        <p class="text-gray-800 italic">"Advocating for more public charging stations for EVs." <span class="font-semibold text-gray-600">- Admin</span></p>
+                    </li>
+                </ul>
+                <p id="no-ideas-yet" class="text-gray-600 italic mt-4 hidden">No ideas shared yet. Be the first!</p>
+            </div>
+        </section>
+
+
+        <!-- Survey Box Section -->
+        <section class="md:col-span-2 bg-white p-8 rounded-3xl shadow-xl border-b-4 border-green-400 transform hover:scale-102 transition-transform duration-300">
+            <h2 id="survey-title" class="text-3xl sm:text-4xl font-bold text-green-800 mb-6 flex items-center">
+                <svg class="w-9 h-9 mr-3 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14h.007a.007.007 0 01.007.007L10 14h.007a.007.007 0 01.007.007V10a6 6 0 018 0zM4.243 4.243a6 6 0 00-.007 7.743L6 14h-.007a.007.007 0 01-.007.007L4 14h.007a.007.007 0 01.007.007V10a6 6 0 00-8 0z" clipRule="evenodd"></path></svg>
+                Community Feedback Survey
+            </h2>
+            <div id="survey-content-wrapper">
+                <form id="survey-form" class="space-y-6">
+                    <p id="survey-instructions" class="text-gray-700 italic text-lg mb-4">We value your input! Please take a moment to answer a few questions about this toolkit.</p>
+
+                    <!-- Name Field -->
+                    <div>
+                        <label for="name" id="survey-name-label" class="block text-gray-800 font-semibold mb-2">Your Name (Optional)</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 text-lg"
+                            placeholder="John Doe"
+                        />
+                    </div>
+
+                    <!-- Place Field -->
+                    <div>
+                        <label for="place" id="survey-place-label" class="block text-gray-800 font-semibold mb-2">Your City/Town (Optional)</label>
+                        <input
+                            type="text"
+                            id="place"
+                            name="place"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 text-lg"
+                            placeholder="Visakhapatnam"
+                        />
+                    </div>
+
+                    <!-- Helpfulness Question -->
+                    <div>
+                        <label id="survey-helpfulness-label" class="block text-gray-800 font-semibold mb-2">How helpful was this toolkit in increasing your awareness about clean energy?</label>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <label class="inline-flex items-center">
+                                <input
+                                    type="radio"
+                                    name="helpfulness"
+                                    value="very_helpful"
+                                    class="form-radio text-green-600"
+                                    required
+                                />
+                                <span id="survey-helpful-option1" class="ml-2 text-gray-700">Very Helpful</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input
+                                    type="radio"
+                                    name="helpfulness"
+                                    value="somewhat_helpful"
+                                    class="form-radio text-green-600"
+                                />
+                                <span id="survey-helpful-option2" class="ml-2 text-gray-700">Somewhat Helpful</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input
+                                    type="radio"
+                                    name="helpfulness"
+                                    value="not_helpful"
+                                    class="form-radio text-green-600"
+                                />
+                                <span id="survey-helpful-option3" class="ml-2 text-gray-700">Not Helpful</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Topics Question -->
+                    <div>
+                        <label for="topics" id="survey-topics-label" class="block text-gray-800 font-semibold mb-2">
+                            What other clean energy topics would you like to see covered or expanded?
+                        </label>
+                        <input
+                            type="text"
+                            id="topics"
+                            name="topics"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 text-lg"
+                            placeholder="e.g., Solar panel installation, government incentives"
+                        />
+                    </div>
+
+                    <!-- Feedback Question -->
+                    <div>
+                        <label for="feedback" id="survey-feedback-label" class="block text-gray-800 font-semibold mb-2">
+                            Do you have any other feedback or suggestions?
+                        </label>
+                        <textarea
+                            id="feedback"
+                            name="feedback"
+                            rows="4"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 text-lg"
+                            placeholder="Share your thoughts here..."
+                        ></textarea>
+                    </div>
+
+                    <button
+                        type="submit"
+                        id="survey-submit-btn"
+                        class="w-full px-8 py-4 rounded-full font-bold text-xl bg-green-600 text-white shadow-lg hover:bg-green-700 transition-colors transform hover:scale-105 active:scale-95"
+                    >
+                        Submit Feedback
+                    </button>
+                </form>
+            </div>
+            <div id="survey-thanks-message" class="text-center py-8 hidden">
+                <p class="text-2xl text-green-700 font-semibold mb-4"></p>
+                <svg class="mx-auto mt-4 w-20 h-20 text-green-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-4xl text-center mt-12 p-4 text-gray-600 text-base">
+        &copy; <span id="current-year"></span> Clean Energy Awareness Hub. All rights reserved.
+    </footer>
+
+    <script>
+        // JavaScript for dynamic content and interactivity
+
+        // Global state variables for simplicity in vanilla JS
+        let currentLang = 'en';
+        let surveySubmitted = false;
+        let isConventionalEnergy = true; // State for the visualizer
+
+        // Language content dictionary
+        const translations = {
+            en: {
+                appTitle: "Clean Energy Awareness Hub",
+                tagline: "Empowering communities with sustainable knowledge and action",
+                aboutTitle: "About Clean Energy",
+                aboutContent: "Clean energy sources are crucial for reducing carbon emissions, combating climate change, and ensuring a sustainable future. They harness natural processes like sunlight, wind, water, and geothermal heat, producing little to no greenhouse gases or pollutants during operation. Unlike fossil fuels, which are finite and contribute to air pollution, clean energy offers an inexhaustible and environmentally friendly alternative. Adopting clean energy not only protects our planet but also fosters energy independence, creates green jobs, and can lead to long-term economic savings for households and industries.",
+                practicalTipsSubtitle: "Practical Energy Saving Tips for Your Home",
+                tip1Title: "Switch to LEDs",
+                tip1Content: "Replace incandescent bulbs with energy-efficient LED lighting. LEDs consume up to 80% less energy, last much longer (often 15-25 years), and save money on electricity bills.",
+                tip2Title: "Unplug 'Vampire' Electronics",
+                tip2Content: "Many electronics (chargers, TVs, computers, appliances) consume 'phantom' or 'vampire' energy even when turned off or in standby mode. Unplug them or use smart power strips to cut off power completely.",
+                tip3Title: "Optimize Thermostat Settings",
+                tip3Content: "Adjust your thermostat a few degrees higher in summer and lower in winter. Programmable or smart thermostats can automate this, saving significant heating and cooling costs.",
+                tip4Title: "Seal Air Leaks & Insulate",
+                tip4Content: "Check for drafts around windows, doors, outlets, and attics. Sealing these leaks with caulk, weatherstripping, or adding insulation can drastically improve your home's energy efficiency and comfort.",
+                tip5Title: "Efficient Appliance Choices",
+                tip5Content: "When replacing old appliances, look for ENERGY STAR® certified models. They are designed to be significantly more energy-efficient, saving water and electricity.",
+                tip6Title: "Utilize Natural Light & Ventilation",
+                tip6Content: "Maximize natural daylight by opening curtains and blinds. Use natural ventilation (opening windows) instead of air conditioning when the weather permits.",
+                tip7Title: "Maintain HVAC Systems",
+                tip7Content: "Regularly clean or replace HVAC filters and get your heating and cooling systems professionally serviced annually for optimal efficiency and longevity.",
+                whyMatterTitle: "Why Clean Energy Matters for Our Community",
+                whyMatterContent: "Transitioning to clean energy brings a multitude of benefits directly to our local communities. It leads to cleaner air, improving public health and reducing respiratory illnesses. Locally sourced renewable energy can boost our economy by creating new jobs in installation, maintenance, and manufacturing. Furthermore, it enhances energy security, making our community less vulnerable to price fluctuations and supply disruptions of traditional fuels. By embracing clean energy, we invest in a healthier environment, a stronger economy, and a more resilient future for everyone.",
+                sustainabilityTitle: "Sustainability & Our Collective Future",
+                sustainabilityContent1: "Sustainability is about meeting the needs of the present without compromising the ability of future generations to meet their own needs. It encompasses three core pillars: environmental protection, social equity, and economic viability. It's a holistic approach to living, consuming, and producing.",
+                sustainabilityContent2: "Embracing sustainability means adopting practices like waste reduction (reduce, reuse, recycle), conserving water, supporting local and ethical businesses, and promoting biodiversity. By working together, we can build resilient communities that thrive in harmony with our planet, ensuring a prosperous future for everyone.",
+                impactConventionalTitle: "The Impact of Conventional Energy",
+                impactConventionalContent1: "Our reliance on conventional energy sources like fossil fuels (coal, oil, natural gas) comes at a significant environmental and health cost. Burning these fuels releases large quantities of greenhouse gases, primarily carbon dioxide, which trap heat in the atmosphere and drive climate change. This leads to rising global temperatures, more extreme weather events, rising sea levels, and devastating impacts on ecosystems and biodiversity.",
+                impactConventionalContent2: "Beyond climate change, fossil fuel combustion also produces harmful air pollutants such as particulate matter, sulfur dioxide, and nitrogen oxides. These pollutants contribute to respiratory illnesses, heart disease, and premature deaths, especially in urban areas and communities near power plants. The extraction and transportation of these fuels also carry risks, including oil spills, habitat destruction, and water contamination.",
+                impactConventionalContent3: "Furthermore, fossil fuels are finite resources, meaning their supply is limited. This creates energy insecurity, subjecting economies to volatile price fluctuations and geopolitical tensions. Shifting away from these damaging sources towards clean, renewable energy is essential not only for environmental protection but for public health, economic stability, and global peace.",
+                visualizerTitle: "Visualize the Transition to Clean Energy",
+                visualizerInstruction: "Click the button to see the contrast between conventional and clean energy impacts!",
+                visualizerButtonConventional: "See Clean Energy!",
+                visualizerButtonClean: "See Conventional Energy!",
+                shareIdeaTitle: "Share Your Green Idea!",
+                shareIdeaInstruction: "Have a great idea for promoting clean energy or sustainability in your community? Share it with us!",
+                ideaLabel: "Your Idea:",
+                ideaPlaceholder: "e.g., Organize a community clean-up, start a local composting program...",
+                ideaNameLabel: "Your Name (Optional):",
+                ideaNamePlaceholder: "Anonymous",
+                submitIdeaBtn: "Submit Idea",
+                ideasSharedTitle: "Ideas Shared by the Community:",
+                noIdeasYet: "No ideas shared yet. Be the first!",
+                languageSelector: "Select Language:",
+                surveyTitle: "Community Feedback Survey",
+                surveyInstructions: "We value your input! Please take a moment to answer a few questions about this toolkit.",
+                surveyNameLabel: "Your Name (Optional)",
+                surveyNamePlaceholder: "John Doe",
+                surveyPlaceLabel: "Your City/Town (Optional)",
+                surveyPlacePlaceholder: "Visakhapatnam",
+                surveyHelpfulness: "How helpful was this toolkit in increasing your awareness about clean energy?",
+                surveyHelpfulOption1: "Very Helpful",
+                surveyHelpfulOption2: "Somewhat Helpful",
+                surveyHelpfulOption3: "Not Helpful",
+                surveyTopics: "What other clean energy topics would you like to see covered or expanded?",
+                surveyFeedback: "Do you have any other feedback or suggestions?",
+                surveySubmit: "Submit Feedback",
+                surveyThanks: "Thank you for your valuable feedback! Your input helps us improve."
+            },
+            hi: { // Hindi translations
+                appTitle: "स्वच्छ ऊर्जा जागरूकता केंद्र",
+                tagline: "स्थायी ज्ञान और कार्य के साथ समुदायों को सशक्त बनाना",
+                aboutTitle: "स्वच्छ ऊर्जा के बारे में",
+                aboutContent: "कार्बन उत्सर्जन को कम करने, जलवायु परिवर्तन से लड़ने और एक स्थायी भविष्य सुनिश्चित करने के लिए स्वच्छ ऊर्जा स्रोत महत्वपूर्ण हैं। वे सूर्य के प्रकाश, हवा, पानी और भूतापीय गर्मी जैसी प्राकृतिक प्रक्रियाओं का उपयोग करते हैं, जिससे संचालन के दौरान बहुत कम या कोई ग्रीनहाउस गैस या प्रदूषक पैदा नहीं होते हैं। जीवाश्म ईंधन के विपरीत, जो सीमित हैं और वायु प्रदूषण में योगदान करते हैं, स्वच्छ ऊर्जा एक अटूट और पर्यावरण के अनुकूल विकल्प प्रदान करती है। स्वच्छ ऊर्जा अपनाने से न केवल हमारे ग्रह की रक्षा होती है बल्कि ऊर्जा स्वतंत्रता को बढ़ावा मिलता है, हरित रोजगार पैदा होते हैं और घरों और उद्योगों के लिए दीर्घकालिक आर्थिक बचत हो सकती है।",
+                practicalTipsSubtitle: "आपके घर के लिए व्यावहारिक ऊर्जा बचत युक्तियाँ",
+                tip1Title: "एलईडी पर स्विच करें",
+                tip1Content: "गरमागरम बल्बों को ऊर्जा-कुशल एलईडी प्रकाश व्यवस्था से बदलें। एलईडी 80% तक कम ऊर्जा की खपत करते हैं, बहुत लंबे समय तक चलते हैं (अक्सर 15-25 साल), और बिजली के बिलों पर पैसे बचाते हैं।",
+                tip2Title: "'पिशाच' इलेक्ट्रॉनिक्स अनप्लग करें",
+                tip2Content: "कई इलेक्ट्रॉनिक्स (चार्जर, टीवी, कंप्यूटर, उपकरण) बंद होने या स्टैंडबाय मोड में होने पर भी 'प्रेत' या 'पिशाच' ऊर्जा का उपभोग करते हैं। उन्हें अनप्लग करें या पूरी तरह से बिजली काटने के लिए स्मार्ट पावर स्ट्रिप्स का उपयोग करें।",
+                tip3Title: "थर्मोस्टेट अनुकूलित करें",
+                tip3Content: "गर्मियों में अपने थर्मोस्टेट को कुछ डिग्री अधिक और सर्दियों में कम समायोजित करें ताकि हीटिंग और कूलिंग लागत में काफी कमी आ सके।",
+                tip4Title: "हवा के रिसाव को सील करें और इन्सुलेट करें",
+                tip4Content: "खिड़कियों, दरवाजों, आउटलेट और अटारी के आसपास ड्राफ्ट की जांच करें। इन रिसावों को कॉल्क, वेदरस्ट्रिपिंग से सील करने या इन्सुलेशन जोड़ने से आपके घर की ऊर्जा दक्षता और आराम में भारी सुधार हो सकता है।",
+                tip5Title: "कुशल उपकरण विकल्प",
+                tip5Content: "पुराने उपकरणों को बदलते समय, ENERGY STAR® प्रमाणित मॉडल देखें। उन्हें काफी अधिक ऊर्जा-कुशल बनाने के लिए डिज़ाइन किया गया है, जिससे पानी और बिजली की बचत होती है।",
+                tip6Title: "प्राकृतिक प्रकाश और वेंटिलेशन का उपयोग करें",
+                tip6Content: "पर्दे और अंधा खोलकर प्राकृतिक दिन के उजाले को अधिकतम करें। मौसम की अनुमति होने पर एयर कंडीशनिंग के बजाय प्राकृतिक वेंटिलेशन (खिड़कियां खोलना) का उपयोग करें।",
+                tip7Title: "एचवीएसी सिस्टम का रखरखाव करें",
+                tip7Content: "नियमित रूप से एचवीएसी फिल्टर को साफ या बदलें और इष्टतम दक्षता और दीर्घायु के लिए सालाना अपने हीटिंग और कूलिंग सिस्टम की पेशेवर रूप से सेवा करवाएं।",
+                whyMatterTitle: "हमारे समुदाय के लिए स्वच्छ ऊर्जा क्यों मायने रखती है",
+                whyMatterContent: "स्वच्छ ऊर्जा में संक्रमण से हमारे स्थानीय समुदायों को सीधे कई लाभ मिलते हैं। यह हवा को साफ करता है, सार्वजनिक स्वास्थ्य में सुधार करता है और श्वसन संबंधी बीमारियों को कम करता है। स्थानीय रूप से प्राप्त नवीकरणीय ऊर्जा स्थापना, रखरखाव और विनिर्माण में नई नौकरियां पैदा करके हमारी अर्थव्यवस्था को बढ़ावा दे सकती है। इसके अलावा, यह ऊर्जा सुरक्षा को बढ़ाता है, जिससे हमारा समुदाय पारंपरिक ईंधन की कीमतों में उतार-चढ़ाव और आपूर्ति व्यवधानों के प्रति कम कमजोर होता है। स्वच्छ ऊर्जा को अपनाकर, हम सभी के लिए एक स्वस्थ वातावरण, एक मजबूत अर्थव्यवस्था और अधिक लचीले भविष्य में निवेश करते हैं।",
+                sustainabilityTitle: "स्थिरता और हमारा सामूहिक भविष्य",
+                sustainabilityContent1: "स्थिरता वर्तमान की जरूरतों को पूरा करने के बारे में है, बिना भविष्य की पीढ़ियों की अपनी जरूरतों को पूरा करने की क्षमता से समझौता किए। इसमें तीन मुख्य स्तंभ शामिल हैं: पर्यावरणीय संरक्षण, सामाजिक समानता और आर्थिक व्यवहार्यता। यह रहने, उपभोग करने और उत्पादन करने का एक समग्र दृष्टिकोण है।",
+                sustainabilityContent2: "स्थिरता को अपनाना मतलब कचरा कम करना (कम करें, पुन: उपयोग करें, पुनर्चक्रण करें), पानी बचाना, स्थानीय और नैतिक व्यवसायों का समर्थन करना और जैव विविधता को बढ़ावा देना जैसे प्रथाओं को अपनाना है। एक साथ काम करके, हम ऐसे लचीले समुदाय बना सकते हैं जो हमारे ग्रह के साथ सद्भाव में पनपते हैं, सभी के लिए एक समृद्ध भविष्य सुनिश्चित करते हैं।",
+                impactConventionalTitle: "पारंपरिक ऊर्जा का प्रभाव",
+                impactConventionalContent1: "जीवाश्म ईंधन (कोयला, तेल, प्राकृतिक गैस) जैसे पारंपरिक ऊर्जा स्रोतों पर हमारी निर्भरता के पर्यावरणीय और स्वास्थ्य पर महत्वपूर्ण प्रभाव पड़ते हैं। इन ईंधनों को जलाने से बड़ी मात्रा में ग्रीनहाउस गैसें, मुख्य रूप से कार्बन डाइऑक्साइड निकलती हैं, जो वायुमंडल में गर्मी को रोकती हैं और जलवायु परिवर्तन को बढ़ावा देती हैं। इससे वैश्विक तापमान में वृद्धि, अधिक चरम मौसम की घटनाएं, समुद्र के स्तर में वृद्धि और पारिस्थितिक तंत्र और जैव विविधता पर विनाशकारी प्रभाव पड़ते हैं।",
+                impactConventionalContent2: "जलवायु परिवर्तन के अलावा, जीवाश्म ईंधन के दहन से हानिकारक वायु प्रदूषक जैसे कि पार्टिकुलेट मैटर, सल्फर डाइऑक्साइड और नाइट्रोजन ऑक्साइड भी पैदा होते हैं। ये प्रदूषक श्वसन संबंधी बीमारियों, हृदय रोग और समय से पहले मौत का कारण बनते हैं, खासकर शहरी क्षेत्रों और बिजली संयंत्रों के पास के समुदायों में। इन ईंधनों के निष्कर्षण और परिवहन में भी तेल रिसाव, आवास विनाश और जल संदूषण सहित जोखिम होते हैं।",
+                impactConventionalContent3: "इसके अलावा, जीवाश्म ईंधन सीमित संसाधन हैं, जिसका अर्थ है कि उनकी आपूर्ति सीमित है। यह ऊर्जा असुरक्षा पैदा करता है, जिससे अर्थव्यवस्थाएं अस्थिर मूल्य में उतार-चढ़ाव और भू-राजनीतिक तनावों के अधीन होती हैं। इन हानिकारक स्रोतों से दूर स्वच्छ, नवीकरणीय ऊर्जा की ओर बढ़ना न केवल पर्यावरण संरक्षण के लिए बल्कि सार्वजनिक स्वास्थ्य, आर्थिक स्थिरता और वैश्विक शांति के लिए भी आवश्यक है।",
+                visualizerTitle: "स्वच्छ ऊर्जा में संक्रमण की कल्पना करें",
+                visualizerInstruction: "पारंपरिक और स्वच्छ ऊर्जा प्रभावों के बीच अंतर देखने के लिए बटन पर क्लिक करें!",
+                visualizerButtonConventional: "स्वच्छ ऊर्जा देखें!",
+                visualizerButtonClean: "पारंपरिक ऊर्जा देखें!",
+                shareIdeaTitle: "अपना हरित विचार साझा करें!",
+                shareIdeaInstruction: "आपके समुदाय में स्वच्छ ऊर्जा या स्थिरता को बढ़ावा देने के लिए एक बढ़िया विचार है? इसे हमारे साथ साझा करें!",
+                ideaLabel: "आपका विचार:",
+                ideaPlaceholder: "उदाहरण के लिए, एक सामुदायिक सफाई अभियान आयोजित करें, एक स्थानीय खाद कार्यक्रम शुरू करें...",
+                ideaNameLabel: "आपका नाम (वैकल्पिक):",
+                ideaNamePlaceholder: "अज्ञात",
+                submitIdeaBtn: "विचार जमा करें",
+                ideasSharedTitle: "समुदाय द्वारा साझा किए गए विचार:",
+                noIdeasYet: "अभी तक कोई विचार साझा नहीं किया गया है। पहले बनें!",
+                languageSelector: "भाषा का चयन करें:",
+                surveyTitle: "सामुदायिक प्रतिक्रिया सर्वेक्षण",
+                surveyInstructions: "हम आपके इनपुट को महत्व देते हैं! कृपया इस टूलकिट के बारे में कुछ प्रश्नों के उत्तर देने के लिए कुछ समय निकालें।",
+                surveyNameLabel: "आपका नाम (वैकल्पिक)",
+                surveyNamePlaceholder: "जॉन डो",
+                surveyPlaceLabel: "आपका शहर/कस्बा (वैकल्पिक)",
+                surveyPlacePlaceholder: "विशाखापत्तनम",
+                surveyHelpfulness: "स्वच्छ ऊर्जा के बारे में आपकी जागरूकता बढ़ाने में यह टूलकिट कितना सहायक था?",
+                surveyHelpfulOption1: "बहुत सहायक",
+                surveyHelpfulOption2: "कुछ हद तक सहायक",
+                surveyHelpfulOption3: "सहायक नहीं",
+                surveyTopics: "आप किन अन्य स्वच्छ ऊर्जा विषयों को शामिल या विस्तारित देखना चाहेंगे?",
+                surveyFeedback: "क्या आपके पास कोई अन्य प्रतिक्रिया या सुझाव है?",
+                surveySubmit: "प्रतिक्रिया जमा करें",
+                surveyThanks: "आपकी बहुमूल्य प्रतिक्रिया के लिए धन्यवाद! आपका इनपुट हमें सुधार करने में मदद करता है।"
+            },
+            fr: { // French translations
+                appTitle: "Centre de Sensibilisation à l'Énergie Propre",
+                tagline: "Donner aux communautés les moyens d'acquérir des connaissances et des actions durables",
+                aboutTitle: "À propos de l'Énergie Propre",
+                aboutContent: "Les sources d'énergie propre sont cruciales pour réduire les émissions de carbone, lutter contre le changement climatique et assurer un avenir durable. Elles exploitent des processus naturels comme la lumière du soleil, le vent, l'eau et la chaleur géothermique, produisant peu ou pas de gaz à effet de serre ou de polluants pendant le fonctionnement. Contrairement aux combustibles fossiles, qui sont limités et contribuent à la pollution de l'air, l'énergie propre offre une alternative inépuisable et respectueuse de l'environnement. L'adoption de l'énergie propre non seulement protège notre planète, mais favorise également l'indépendance énergétique, crée des emplois verts et peut entraîner des économies économiques à long terme pour les ménages et les industries.",
+                practicalTipsSubtitle: "Conseils Pratiques pour Économiser l'Énergie chez Vous",
+                tip1Title: "Passer aux LED",
+                tip1Content: "Remplacez les ampoules à incandescence par un éclairage LED économe en énergie. Les LED consomment jusqu'à 80% moins d'énergie, durent beaucoup plus longtemps (souvent 15-25 ans) et permettent d'économiser sur les factures d'électricité.",
+                tip2Title: "Débrancher les Appareils 'Vampires'",
+                tip2Content: "De nombreux appareils électroniques (chargeurs, téléviseurs, ordinateurs, appareils) consomment de l'énergie 'fantôme' ou 'vampire' même lorsqu'ils sont éteints ou en mode veille. Débranchez-les ou utilisez des multiprises intelligentes pour couper complètement l'alimentation.",
+                tip3Title: "Optimiser les Réglages du Thermostat",
+                tip3Content: "Ajustez votre thermostat de quelques degrés plus haut en été et plus bas en hiver. Les thermostats programmables ou intelligents peuvent automatiser cela, ce qui permet des économies importantes sur les coûts de chauffage et de climatisation.",
+                tip4Title: "Sceller les Fuites d'Air et Isoler",
+                tip4Content: "Vérifiez les courants d'air autour des fenêtres, des portes, des prises et des greniers. Sceller ces fuites avec du calfeutrage, du coupe-froid ou ajouter de l'isolation peut considérablement améliorer l'efficacité énergétique et le confort de votre home.",
+                tip5Title: "Choix d'Appareils Efficaces",
+                tip5Content: "Lors du remplacement d'anciens appareils, recherchez les modèles certifiés ENERGY STAR®. Ils sont conçus pour être beaucoup plus économes en énergie, ce qui permet d'économiser de l'eau et de l'électricité.",
+                tip6Title: "Utiliser la Lumière Naturelle et la Ventilation",
+                tip6Content: "Maximisez la lumière naturelle du jour en ouvrant les rideaux et les stores. Utilisez la ventilation naturelle (ouvrir les fenêtres) au lieu de la climatisation lorsque le temps le permet.",
+                tip7Title: "Entretenir les Systèmes CVC",
+                tip7Content: "Nettoyez ou remplacez régulièrement les filtres CVC et faites entretenir professionnellement vos systèmes de chauffage et de refroidissement chaque année pour une efficacité et une longévité optimales.",
+                whyMatterTitle: "Pourquoi l'Énergie Propre Compte pour Notre Communauté",
+                whyMatterContent: "La transition vers l'énergie propre apporte une multitude d'avantages directement à nos communautés locales. Elle conduit à un air plus pur, améliorant la santé publique et réduisant les maladies respiratoires. L'énergie renouvelable d'origine locale peut stimuler notre économie en créant de nouveaux emplois dans l'installation, la maintenance et la fabrication. De plus, elle améliore la sécurité énergétique, rendant notre communauté moins vulnérable aux fluctuations des prix et aux perturbations de l'approvisionnement en carburants traditionnels. En adoptant l'énergie propre, nous investissons dans un environnement plus sain, une économie plus forte et un avenir plus résilient pour tous.",
+                sustainabilityTitle: "Durabilité et Notre Avenir Collectif",
+                sustainabilityContent1: "La durabilité consiste à répondre aux besoins du présent sans compromettre la capacité des générations futures à satisfaire les leurs. Elle repose sur trois piliers fondamentaux : la protection de l'environnement, l'équité sociale et la viabilité économique. C'est une approche holistique de la vie, de la consommation et de la production.",
+                sustainabilityContent2: "Adopter la durabilité signifie adopter des pratiques telles que la réduction des déchets (réduire, réutiliser, recycler), la conservation de l'eau, le soutien aux entreprises locales et éthiques, et la promotion de la biodiversité. En travaillant ensemble, nous pouvons bâtir des communautés résilientes qui prospèrent en harmonie avec notre planète, assurant un avenir prospère pour tous.",
+                impactConventionalTitle: "L'Impact de l'Énergie Conventionnelle",
+                impactConventionalContent1: "Notre dépendance aux sources d'énergie conventionnelles comme les combustibles fossiles (charbon, pétrole, gaz naturel) a un coût environnemental et sanitaire important. La combustion de ces combustibles libère de grandes quantités de gaz à effet de serre, principalement du dioxyde de carbone, qui emprisonnent la chaleur dans l'atmosphère et entraînent le changement climatique. Cela conduit à une augmentation des températures mondiales, à des événements météorologiques plus extrêmes, à une élévation du niveau de la mer et à des impacts dévastateurs sur les écosystèmes et la biodiversité.",
+                impactConventionalContent2: "Au-delà du changement climatique, la combustion des combustibles fossiles produit également des polluants atmosphériques nocifs tels que les particules, le dioxyde de soufre et les oxydes d'azote. Ces polluants contribuent aux maladies respiratoires, aux maladies cardiaques et aux décès prématurés, en particulier dans les zones urbaines et les communautés proches des centrales électriques. L'extraction et le transport de ces combustibles comportent également des risques, notamment les déversements de pétrole, la destruction des habitats et la contamination de l'eau.",
+                impactConventionalContent3: "De plus, les combustibles fossiles sont des ressources finies, ce qui signifie que leur approvisionnement est limité. Cela crée une insécurité énergétique, soumettant les économies à des fluctuations de prix volatiles et à des tensions géopolitiques. S'éloigner de ces sources dommageables vers une énergie propre et renouvelable est essentiel non seulement pour la protection de l'environnement, mais aussi pour la santé publique, la stabilité économique et la paix mondiale.",
+                visualizerTitle: "Visualisez la Transition Énergétique",
+                visualizerInstruction: "Cliquez sur le bouton pour voir le contraste entre les impacts de l'énergie conventionnelle et propre !",
+                visualizerButtonConventional: "Voir l'énergie propre !",
+                visualizerButtonClean: "Voir l'énergie conventionnelle !",
+                shareIdeaTitle: "Partagez Votre Idée Verte !",
+                shareIdeaInstruction: "Vous avez une excellente idée pour promouvoir l'énergie propre ou la durabilité dans votre communauté ? Partagez-la avec nous !",
+                ideaLabel: "Votre Idée :",
+                ideaPlaceholder: "Ex: Organiser un nettoyage communautaire, lancer un programme de compostage local...",
+                ideaNameLabel: "Votre Nom (Facultatif) :",
+                ideaNamePlaceholder: "Anonyme",
+                submitIdeaBtn: "Soumettre l'idée",
+                ideasSharedTitle: "Idées Partagées par la Communauté :",
+                noIdeasYet: "Aucune idée partagée pour le moment. Soyez le premier !",
+                languageSelector: "Sélectionner la Langue :",
+                surveyTitle: "Sondage de Rétroaction de la Communauté",
+                surveyInstructions: "Votre avis nous est précieux ! Veuillez prendre un moment pour répondre à quelques questions sur cette boîte à outils.",
+                surveyNameLabel: "Votre Nom (Facultatif)",
+                surveyNamePlaceholder: "Jean Dupont",
+                surveyPlaceLabel: "Votre Ville/Commune (Facultatif)",
+                surveyPlacePlaceholder: "Paris",
+                surveyHelpfulness: "Dans quelle mesure cette boîte à outils vous a-t-elle été utile pour sensibiliser à l'énergie propre ?",
+                surveyHelpfulOption1: "Très utile",
+                surveyHelpfulOption2: "Assez utile",
+                surveyHelpfulOption3: "Pas utile",
+                surveyTopics: "Quels autres sujets d'énergie propre souhaiteriez-vous voir couverts ou développés ?",
+                surveyFeedback: "Avez-vous d'autres commentaires ou suggestions ?",
+                surveySubmit: "Soumettre les Commentaires",
+                surveyThanks: "Merci pour vos précieux commentaires ! Votre contribution nous aide à nous améliorer."
+            },
+            es: { // Spanish translations
+                appTitle: "Centro de Conciencia sobre Energía Limpia",
+                tagline: "Empoderando a las comunidades con conocimiento y acción sostenibles",
+                aboutTitle: "Acerca de la Energía Limpia",
+                aboutContent: "Las fuentes de energía limpia son cruciales para reducir las emisiones de carbono, combatir el cambio climático y asegurar un futuro sostenible. Aprovechan procesos naturales como la luz solar, el viento, el agua y el calor geotérmico, produciendo pocas o ninguna emisión de gases de efecto invernadero o contaminantes durante su funcionamiento. A diferencia de los combustibles fósiles, que son finitos y contribuyen a la contaminación del aire, la energía limpia ofrece una alternativa inagotable y respetuosa con el medio ambiente. Adoptar la energía limpia no solo protege nuestro planeta, sino que también fomenta la independencia energética, crea empleos verdes y puede generar ahorros económicos a largo plazo para hogares e industrias.",
+                practicalTipsSubtitle: "Consejos Prácticos para Ahorrar Energía en su Hogar",
+                tip1Title: "Cambie a LEDs",
+                tip1Content: "Reemplace las bombillas incandescentes por iluminación LED de bajo consumo. Los LED consumen hasta un 80% menos de energía, duran mucho más (a menudo 15-25 años) y ahorran dinero en las facturas de electricidad.",
+                tip2Title: "Desconecte los Electrónicos 'Vampiro'",
+                tip2Content: "Muchos electrónicos (cargadores, televisores, computadoras, electrodomésticos) consumen energía 'fantasma' o 'vampiro' incluso cuando están apagados o en modo de espera. Desconectelos o use regletas inteligentes para cortar la energía por completo.",
+                tip3Title: "Optimice la Configuración del Termostato",
+                tip3Content: "Ajuste su termostato unos grados más alto en verano y más bajo en invierno. Los termostatos programables o inteligentes pueden automatizar esto, lo que permite un ahorro significativo en los costos de calefacción y refrigeración.",
+                tip4Title: "Selle Fugas de Aire y Aísle",
+                tip4Content: "Revise si hay corrientes de aire alrededor de ventanas, puertas, enchufes y áticos. Sellar estas fugas con masilla, burletes o agregar aislamiento puede mejorar drásticamente la eficiencia energética y la comodidad de su hogar.",
+                tip5Title: "Opciones de Electrodomésticos Eficientes",
+                tip5Content: "Al reemplazar electrodomésticos antiguos, busque modelos certificados ENERGY STAR®. Están diseñados para ser significativamente más eficientes energéticamente, ahorrando agua y electricidad.",
+                tip6Title: "Utilice Luz Natural y Ventilacion",
+                tip6Content: "Maximice la luz natural durante el día abriendo cortinas y persianas. Use ventilación natural (abriendo ventanas) en lugar de aire acondicionado cuando el clima lo permita.",
+                tip7Title: "Mantenga los Sistemas HVAC",
+                tip7Content: "Limpie o reemplace regularmente los filtros HVAC y haga revisar profesionalmente sus sistemas de calefacción y refrigeración anualmente para una eficiencia y longevidad óptimas.",
+                whyMatterTitle: "Por qué la Energía Limpia Importa para Nuestra Comunidad",
+                whyMatterContent: "La transición a la energía limpia aporta una multitud de beneficios directamente a nuestras comunidades locales. Conduce a un aire más limpio, mejorando la salud pública y reduciendo las enfermedades respiratorias. La energía renovable de origen local puede impulsar nuestra economía creando nuevos puestos de trabajo en instalación, mantenimiento y fabricación. Además, mejora la seguridad energética, haciendo que nuestra comunidad sea menos vulnerable a las fluctuaciones de precios y a las interrupciones del suministro de combustibles tradicionales. Al adoptar la energía limpia, invertimos en un medio ambiente más saludable, una economía más fuerte y un futuro más resiliente para todos.",
+                sustainabilityTitle: "Sostenibilidad y Nuestro Futuro Colectivo",
+                sustainabilityContent1: "La sostenibilidad consiste en satisfacer las necesidades del presente sin comprometer la capacidad de las generaciones futuras para satisfacer las suyas. Abarca tres pilares fundamentales: protección del medio ambiente, equidad social y viabilidad económica. Es un enfoque holístico de la vida, el consumo y la producción.",
+                sustainabilityContent2: "Adoptar la sostenibilidad significa adoptar prácticas como la reducción de residuos (reducir, reutilizar, reciclar), conservar el agua, apoyar a empresas locales y éticas, y promover la biodiversidad. Al trabajar juntos, podemos construir comunidades resilientes que prosperen en armonía con nuestro planeta, asegurando un futuro próspero para todos.",
+                impactConventionalTitle: "El Impacto de la Energía Convencional",
+                impactConventionalContent1: "Nuestra dependencia de las fuentes de energía convencionales como los combustibles fósiles (carbón, petróleo, gas natural) conlleva un coste medioambiental y sanitario significativo. La quema de estos combustibles libera grandes cantidades de gases de efecto invernadero, principalmente dióxido de carbono, que atrapan el calor en la atmósfera e impulsan el cambio climático. Esto conduce al aumento de las temperaturas globales, a fenómenos meteorológicos más extremos, a la subida del nivel del mar y a impactos devastadores en los ecosistemas y la biodiversidad.",
+                impactConventionalContent2: "Más allá del cambio climático, la combustión de combustibles fósiles también produce contaminantes atmosféricos nocivos como partículas, dióxido de azufre y óxidos de nitrógeno. Estos contaminantes contribuyen a enfermedades respiratorias, enfermedades cardíacas y muertes prematuras, especialmente en zonas urbanas y comunidades cercanas a centrales eléctricas. La extracción y el transporte de estos combustibles también conllevan riesgos, como derrames de petróleo, destrucción de hábitats y contaminación del agua.",
+                impactConventionalContent3: "Además, los combustibles fósiles son recursos finitos, lo que significa que su suministro es limitado. Esto crea inseguridad energética, sometiendo a las economías a fluctuaciones volátiles de precios y tensiones geopolíticas. Alejarse de estas fuentes dañinas hacia la energía limpia y renovable es esencial no solo para la protección del medio ambiente, sino también para la salud pública, la estabilidad económica y la paz mundial.",
+                visualizerTitle: "Visualice la Transición Energética",
+                visualizerInstruction: "¡Haga clic en el botón para ver el contraste entre los impactos de la energía convencional y limpia!",
+                visualizerButtonConventional: "¡Ver Energía Limpia!",
+                visualizerButtonClean: "¡Ver Energía Convencional!",
+                shareIdeaTitle: "¡Comparta su Idea Verde!",
+                shareIdeaInstruction: "¿Tiene una excelente idea para promover la energía limpia o la sostenibilidad en su comunidad? ¡Compártala con nosotros!",
+                ideaLabel: "Su Idea:",
+                ideaPlaceholder: "Ej: Organizar una limpieza comunitaria, iniciar un programa de compostaje local...",
+                ideaNameLabel: "Su Nombre (Opcional):",
+                ideaNamePlaceholder: "Anónimo",
+                submitIdeaBtn: "Enviar Idea",
+                ideasSharedTitle: "Ideas Compartidas por la Comunidad:",
+                noIdeasYet: "Aún no se han compartido ideas. ¡Sea el primero!",
+                languageSelector: "Seleccionar Idioma:",
+                surveyTitle: "Encuesta de Comentarios de la Comunidad",
+                surveyInstructions: "¡Valoramos su opinión! Por favor, tómese un momento para responder algunas preguntas sobre este kit de herramientas.",
+                surveyNameLabel: "Su Nombre (Opcional)",
+                surveyNamePlaceholder: "Juan Pérez",
+                surveyPlaceLabel: "Su Ciudad/Pueblo (Opcional)",
+                surveyPlacePlaceholder: "Ciudad de México",
+                surveyHelpfulness: "¿Qué tan útil fue este kit de herramientas para aumentar su conciencia sobre la energía limpia?",
+                surveyHelpfulOption1: "Muy Útil",
+                surveyHelpfulOption2: "Algo Útil",
+                surveyHelpfulOption3: "No Útil",
+                surveyTopics: "¿Qué otros temas de energía limpia le gustaría ver cubiertos o ampliados?",
+                surveyFeedback: "¿Tiene algún otro comentario o sugerencia?",
+                surveySubmit: "Enviar Comentarios",
+                surveyThanks: "¡Gracias por sus valiosos comentarios! Su aporte nos ayuda a mejorar."
+            },
+            de: { // German translations
+                appTitle: "Zentrum für saubere Energiebewusstsein",
+                tagline: "Gemeinschaften mit nachhaltigem Wissen und Handeln stärken",
+                aboutTitle: "Über saubere Energie",
+                aboutContent: "Saubere Energiequellen sind entscheidend, um Kohlenstoffemissionen zu reduzieren, den Klimawandel zu bekämpfen und eine nachhaltige Zukunft zu sichern. Sie nutzen natürliche Prozesse wie Sonnenlicht, Wind, Wasser und Erdwärme und erzeugen im Betrieb wenig bis keine Treibhausgase oder Schadstoffe. Im Gegensatz zu fossilen Brennstoffen, die endlich sind und zur Luftverschmutzung beitragen, bietet saubere Energie eine unerschöpfliche und umweltfreundliche Alternative. Die Einführung sauberer Energie schützt nicht nur unseren Planeten, sondern fördert auch die Energieunabhängigkeit, schafft grüne Arbeitsplätze und kann langfristig zu wirtschaftlichen Einsparungen für Haushalte und Industrien führen.",
+                practicalTipsSubtitle: "Praktische Energiespartipps für Ihr Zuhause",
+                tip1Title: "Auf LEDs umsteigen",
+                tip1Content: "Ersetzen Sie Glühlampen durch energieeffiziente LED-Beleuchtung. LEDs verbrauchen bis zu 80 % weniger Energie, halten viel länger (oft 15-25 Jahre) und sparen Geld bei den Stromrechnungen.",
+                tip2Title: "'Vampir'-Elektronik ausstecken",
+                tip2Content: "Viele elektronische Geräte (Ladegeräte, Fernseher, Computer, Haushaltsgeräte) verbrauchen auch im ausgeschalteten Zustand oder im Standby-Modus 'Phantom-' oder 'Vampir'-Energie. Ziehen Sie den Stecker oder verwenden Sie intelligente Steckdosenleisten, um die Stromversorgung vollständig zu unterbrechen.",
+                tip3Title: "Thermostateinstellungen optimieren",
+                tip3Content: "Stellen Sie Ihr Thermostat im Sommer um einige Grad höher und im Winter niedriger ein. Programmierbare oder intelligente Thermostate können dies automatisieren und so erhebliche Heiz- und Kühlkosten einsparen.",
+                tip4Title: "Luftlecks abdichten & Isolieren",
+                tip4Content: "Prüfen Sie auf Zugluft an Fenstern, Türen, Steckdosen und Dachböden. Das Abdichten dieser Lecks mit Dichtungsmasse, Dichtungsstreifen oder das Hinzufügen von Isolierung kann die Energieeffizienz und den Komfort Ihres Hauses drastisch verbessern.",
+                tip5Title: "Effiziente Geräteauswahl",
+                tip5Content: "Achten Sie beim Austausch alter Geräte auf ENERGY STAR®-zertifizierte Modelle. Sie sind darauf ausgelegt, deutlich energieeffizienter zu sein und Wasser und Strom zu sparen.",
+                tip6Title: "Natürliches Licht und Belüftung nutzen",
+                tip6Content: "Maximieren Sie das natürliche Tageslicht, indem Sie Vorhänge und Jalousien öffnen. Nutzen Sie natürliche Belüftung (Fenster öffnen) anstelle von Klimaanlagen, wenn das Wetter es zulässt.",
+                tip7Title: "Wartung der HVAC-Systeme",
+                tip7Content: "Regelmäßig HVAC-Filter reinigen oder ersetzen und Ihre Heiz- und Kühlsysteme jährlich professionell warten lassen, um optimale Effizienz und Langlebigkeit zu gewährleisten.",
+                whyMatterTitle: "Warum saubere Energie für unsere Gemeinschaft wichtig ist",
+                whyMatterContent: "Der Übergang zu sauberer Energie bringt eine Vielzahl von Vorteilen direkt in unsere lokalen Gemeinschaften. Er führt zu sauberer Luft, verbessert die öffentliche Gesundheit und reduziert Atemwegserkrankungen. Lokal gewonnene erneuerbare Energie kann unsere Wirtschaft ankurbeln, indem sie neue Arbeitsplätze in Installation, Wartung und Fertigung schafft. Darüber hinaus verbessert sie die Energiesicherheit und macht unsere Gemeinschaft weniger anfällig für Preisschwankungen und Versorgungsunterbrechungen traditioneller Brennstoffe. Durch die Einführung sauberer Energie investieren wir in eine gesündere Umwelt, eine stärkere Wirtschaft und eine widerstandsfähigere Zukunft für alle.",
+                sustainabilityTitle: "Nachhaltigkeit & Unsere gemeinsame Zukunft",
+                sustainabilityContent1: "Nachhaltigkeit bedeutet, die Bedürfnisse der Gegenwart zu befriedigen, ohne die Fähigkeit zukünftiger Generationen zu beeinträchtigen, ihre eigenen Bedürfnisse zu befriedigen. Sie umfasst drei Kernsäulen: Umweltschutz, soziale Gerechtigkeit und wirtschaftliche Rentabilität. Es ist ein ganzheitlicher Ansatz des Lebens, Konsumierens und Produzierens.",
+                sustainabilityContent2: "Nachhaltigkeit zu praktizieren bedeutet, Praktiken wie Abfallreduzierung (reduzieren, wiederverwenden, recyceln), Wassersparen, die Unterstützung lokaler und ethischer Unternehmen und die Förderung der Biodiversität zu übernehmen. Durch Zusammenarbeit können wir widerstandsfähige Gemeinschaften aufbauen, die in Harmonie mit unserem Planeten gedeihen und eine wohlhabende Zukunft für alle sichern.",
+                impactConventionalTitle: "Die Auswirkungen konventioneller Energie",
+                impactConventionalContent1: "Unsere Abhängigkeit von konventionellen Energiequellen wie fossilen Brennstoffen (Kohle, Öl, Erdgas) hat erhebliche Umwelt- und Gesundheitskosten. Das Verbrennen dieser Brennstoffe setzt große Mengen an Treibhausgasen, hauptsächlich Kohlendioxid, frei, die Wärme in der Atmosphäre einschließen und den Klimawandel vorantreiben. Dies führt zu steigenden globalen Temperaturen, extremeren Wetterereignissen, steigendem Meeresspiegel und verheerenden Auswirkungen auf Ökosysteme und Biodiversität.",
+                impactConventionalContent2: "Neben dem Klimawandel erzeugt die Verbrennung fossiler Brennstoffe auch schädliche Luftschadstoffe wie Feinstaub, Schwefeldioxid und Stickoxide. Diese Schadstoffe tragen zu Atemwegserkrankungen, Herzerkrankungen und vorzeitigen Todesfällen bei, insbesondere in städtischen Gebieten und Gemeinden in der Nähe von Kraftwerken. Die Gewinnung und der Transport dieser Brennstoffe bergen ebenfalls Risiken, darunter Ölverschmutzungen, Zerstörung von Lebensräumen und Wasserverunreinigungen.",
+                impactConventionalContent3: "Darüber hinaus sind fossile Brennstoffe endliche Ressourcen, was bedeutet, dass ihre Versorgung begrenzt ist. Dies führt zu Energieunsicherheit, wodurch Volkswirtschaften volatilen Preisschwankungen und geopolitischen Spannungen ausgesetzt sind. Der Übergang von diesen schädlichen Quellen zu sauberer, erneuerbarer Energie ist nicht nur für den Umweltschutz, sondern auch für die öffentliche Gesundheit, die wirtschaftliche Stabilität und den Weltfrieden unerlässlich.",
+                visualizerTitle: "Visualisierung der Energiewende",
+                visualizerInstruction: "Klicken Sie auf die Schaltfläche, um den Kontrast zwischen den Auswirkungen konventioneller und sauberer Energie zu sehen!",
+                visualizerButtonConventional: "Saubere Energie sehen!",
+                visualizerButtonClean: "Konventionelle Energie sehen!",
+                shareIdeaTitle: "Teilen Sie Ihre grüne Idee!",
+                shareIdeaInstruction: "Haben Sie eine großartige Idee, um saubere Energie oder Nachhaltigkeit in Ihrer Gemeinde zu fördern? Teilen Sie sie mit uns!",
+                ideaLabel: "Ihre Idee:",
+                ideaPlaceholder: "Z.B. eine Gemeinschafts-Aufräumaktion organisieren, ein lokales Kompostierungsprogramm starten...",
+                ideaNameLabel: "Ihr Name (Optional):",
+                ideaNamePlaceholder: "Anonym",
+                submitIdeaBtn: "Idee einreichen",
+                ideasSharedTitle: "Von der Gemeinschaft geteilte Ideen:",
+                noIdeasYet: "Noch keine Ideen geteilt. Seien Sie der Erste!",
+                languageSelector: "Sprache auswählen:",
+                surveyTitle: "Umfrage zum Gemeinschafts-Feedback",
+                surveyInstructions: "Wir schätzen Ihre Meinung! Bitte nehmen Sie sich einen Moment Zeit, um einige Fragen zu diesem Toolkit zu beantworten.",
+                surveyNameLabel: "Ihr Name (Optional)",
+                surveyNamePlaceholder: "Max Mustermann",
+                surveyPlaceLabel: "Ihre Stadt/Ort (Optional)",
+                surveyPlacePlaceholder: "Berlin",
+                surveyHelpfulness: "Wie hilfreich war dieses Toolkit, um Ihr Bewusstsein für saubere Energie zu schärfen?",
+                surveyHelpfulOption1: "Sehr hilfreich",
+                surveyHelpfulOption2: "Etwas hilfreich",
+                surveyHelpfulOption3: "Nicht hilfreich",
+                surveyTopics: "Welche anderen Themen im Bereich saubere Energie möchten Sie abgedeckt oder erweitert sehen?",
+                surveyFeedback: "Haben Sie weiteres Feedback oder Vorschläge?",
+                surveySubmit: "Feedback senden",
+                surveyThanks: "Vielen Dank für Ihr wertvolles Feedback! Ihr Beitrag hilft uns, uns zu verbessern."
+            },
+            ta: { // Tamil translations
+                appTitle: "தூய ஆற்றல் விழிப்புணர்வு மையம்",
+                tagline: "நிலையான அறிவு மற்றும் நடவடிக்கைகளுடன் சமூகங்களை மேம்படுத்துதல்",
+                aboutTitle: "தூய ஆற்றல் பற்றி",
+                aboutContent: "தூய ஆற்றல் மூலங்கள் கார்பன் வெளியேற்றத்தைக் குறைப்பதற்கும், காலநிலை மாற்றத்தை எதிர்ப்பதற்கும், நிலையான எதிர்காலத்தை உறுதி செய்வதற்கும் முக்கியமானவை. அவை சூரிய ஒளி, காற்று, நீர் மற்றும் புவிவெப்ப ஆற்றல் போன்ற இயற்கை செயல்முறைகளைப் பயன்படுத்துகின்றன, செயல்படும் போது மிகக் குறைந்த அல்லது எந்த பசுமை இல்ல வாயுக்களையும் அல்லது மாசுபடுத்திகளையும் உற்பத்தி செய்வதில்லை. வரையறுக்கப்பட்ட மற்றும் காற்று மாசுபாட்டிற்கு பங்களிக்கும் புதைபடிவ எரிபொருட்களைப் போலன்றி, தூய ஆற்றல் ஒரு தீர்ந்துபோகாத மற்றும் சுற்றுச்சூழலுக்கு உகந்த மாற்றீட்டை வழங்குகிறது. தூய ஆற்றலை ஏற்றுக்கொள்வது நமது கிரகத்தை பாதுகாப்பது மட்டுமல்லாமல், ஆற்றல் சுதந்திரத்தை வளர்க்கிறது, பசுமை வேலைகளை உருவாக்குகிறது, மேலும் வீடுகளுக்கும் தொழில்களுக்கும் நீண்ட கால பொருளாதார சேமிப்பிற்கு வழிவகுக்கும்.",
+                practicalTipsSubtitle: "உங்கள் வீட்டிற்கான நடைமுறை ஆற்றல் சேமிப்பு குறிப்புகள்",
+                tip1Title: "LEDகளுக்கு மாறுங்கள்",
+                tip1Content: "மின்கல விளக்குகளுக்குப் பதிலாக ஆற்றல் திறன் கொண்ட LED விளக்குகளைப் பயன்படுத்துங்கள். LEDகள் 80% வரை குறைவான ஆற்றலை பயன்படுத்துகின்றன, மிக நீண்ட காலம் (அடிக்கடி 15-25 ஆண்டுகள்) நீடிக்கும், மேலும் மின்சார கட்டணத்தில் பணத்தை சேமிக்கின்றன.",
+                tip2Title: "'வெம்பயர்' எலக்ட்ரானிக்ஸ் அவிழ்த்து விடுங்கள்",
+                tip2Content: "பல எலக்ட்ரானிக்ஸ் (சார்ஜர்கள், டிவிகள், கணினிகள், சாதனங்கள்) அணைக்கப்பட்டிருக்கும் அல்லது காத்திருப்பு முறையில் இருக்கும்போதும் 'பாண்டம்' அல்லது 'வெம்பயர்' ஆற்றலை பயன்படுத்துகின்றன. அவற்றை அவிழ்த்து விடுங்கள் அல்லது முழுமையாக மின்சாரத்தை நிறுத்த ஸ்மார்ட் பவர் ஸ்ட்ரிப்களைப் பயன்படுத்துங்கள்.",
+                tip3Title: "தெர்மோஸ்டாட் அமைப்புகளை மேம்படுத்துங்கள்",
+                tip3Content: "கோடையில் உங்கள் தெர்மோஸ்டாட்டை சில டிகிரி அதிகமாகவும், குளிர்காலத்தில் குறைவாகவும் சரிசெய்யவும். நிரல்படுத்தக்கூடிய அல்லது ஸ்மார்ட் தெர்மோஸ்டாட்கள் இதை தானியங்குபடுத்தலாம், இதனால் வெப்பமூட்டும் மற்றும் குளிரூட்டும் செலவுகளில் கணிசமான சேமிப்பு ஏற்படும்.",
+                tip4Title: "காற்று கசிவுகளை மூடுங்கள் & காப்பு செய்யுங்கள்",
+                tip4Content: "ஜன்னல்கள், கதவுகள், அவுட்லெட்டுகள் மற்றும் அட்லெட்டுகள் சுற்றி காற்று கசிவுகளை சரிபார்க்கவும். கால்க், வெதர்ஸ்ட்ரிப்பிங் அல்லது காப்பு சேர்ப்பதன் மூலம் இந்த கசிவுகளை மூடுவது உங்கள் வீட்டின் ஆற்றல் திறனையும் வசதியையும் பெருமளவில் மேம்படுத்தும்.",
+                tip5Title: "திறமையான சாதனத் தேர்வுகள்",
+                tip5Content: "பழைய சாதனங்களை மாற்றும்போது, ENERGY STAR® சான்றளிக்கப்பட்ட மாதிரிகளைத் தேடுங்கள். அவை குறிப்பிடத்தக்க வகையில் ஆற்றல் திறன் கொண்டதாக வடிவமைக்கப்பட்டுள்ளன, நீர் மற்றும் மின்சாரத்தை சேமிக்கின்றன.",
+                tip6Title: "இயற்கை ஒளி மற்றும் காற்றோட்டத்தைப் பயன்படுத்துங்கள்",
+                tip6Content: "திரைகளைத் திறந்து பகல் நேரத்து ஒளியை அதிகப்படுத்துங்கள். வானிலை அனுமதிக்கும் போது ஏர் கண்டிஷனிங்கிற்குப் பதிலாக இயற்கை காற்றோட்டத்தைப் (சாளரங்களைத் திறப்பது) பயன்படுத்துங்கள்.",
+                tip7Title: "HVAC அமைப்புகளைப் பராமரிக்கவும்",
+                tip7Content: "HVAC வடிகட்டிகளை தவறாமல் சுத்தம் செய்யவும் அல்லது மாற்றவும், மேலும் உங்கள் வெப்பமூட்டும் மற்றும் குளிரூட்டும் அமைப்புகளை ஆண்டுதோறும் தொழில் ரீதியாக சேவை செய்ய வேண்டும், உகந்த செயல்திறன் மற்றும் நீண்ட ஆயுளுக்கு.",
+                whyMatterTitle: "நமது சமூகத்திற்கு தூய ஆற்றல் ஏன் முக்கியம்",
+                whyMatterContent: "தூய ஆற்றலுக்கு மாறுவது நமது உள்ளூர் சமூகங்களுக்கு நேரடியாக பல நன்மைகளைத் தருகிறது. இது சுத்தமான காற்றை ஏற்படுத்துகிறது, பொது சுகாதாரத்தை மேம்படுத்துகிறது மற்றும் சுவாச நோய்களைக் குறைக்கிறது. உள்நாட்டில் பெறப்பட்ட புதுப்பிக்கத்தக்க ஆற்றல், நிறுவல், பராமரிப்பு மற்றும் உற்பத்தியில் புதிய வேலைகளை உருவாக்குவதன் மூலம் நமது பொருளாதாரத்தை மேம்படுத்தும். மேலும், இது ஆற்றல் பாதுகாப்பை மேம்படுத்துகிறது, நமது சமூகத்தை விலைப் பளுக்களுக்கும் பாரம்பரிய எரிபொருட்களின் விநியோக இடையூறுகளுக்கும் குறைவாக ஆக்குகிறது. தூய ஆற்றலை ஏற்றுக்கொள்வதன் மூலம், நாம் ஒரு ஆரோக்கியமான சூழலிலும், ஒரு வலுவான பொருளாதாரத்திலும், அனைவருக்கும் மிகவும் நெகிழ்வான எதிர்காலத்திலும் முதலீடு செய்கிறோம்.",
+                sustainabilityTitle: "நிலையான தன்மை மற்றும் நமது கூட்டு எதிர்காலம்",
+                sustainabilityContent1: "நிலையான தன்மை என்பது எதிர்கால சந்ததியினரின் தேவைகளை பூர்த்தி செய்யும் திறனை சமரசம் செய்யாமல் நிகழ்காலத்தின் தேவைகளை பூர்த்தி செய்வதாகும். இது மூன்று முக்கிய தூண்களை உள்ளடக்கியது: சுற்றுச்சூழல் பாதுகாப்பு, சமூக சமத்துவம் மற்றும் பொருளாதார சாத்தியக்கூறு. இது வாழ்க்கை, நுகர்வு மற்றும் உற்பத்திக்கு ஒரு முழுமையான அணுகுமுறை.",
+                sustainabilityContent2: "நிலையான தன்மையை ஏற்றுக்கொள்வது கழிவு குறைப்பு (குறைத்தல், மீண்டும் பயன்படுத்துதல், மறுசுழற்சி செய்தல்), நீர் சேமிப்பு, உள்ளூர் மற்றும் நெறிமுறை வணிகங்களுக்கு ஆதரவு அளித்தல் மற்றும் பல்லுயிர்களை மேம்படுத்துதல் போன்ற நடைமுறைகளை பின்பற்றுவதாகும். ஒன்றிணைந்து செயல்படுவதன் மூலம், நாம் நமது கிரகத்துடன் இணக்கமாக செழித்து வளரும் நெகிழ்வான சமூகங்களை உருவாக்க முடியும், அனைவருக்கும் ஒரு செழிப்பான எதிர்காலத்தை உறுதி செய்கிறது.",
+                impactConventionalTitle: "பாரம்பரிய ஆற்றலின் தாக்கம்",
+                impactConventionalContent1: "புதைபடிவ எரிபொருட்கள் (நிலக்கரி, எண்ணெய், இயற்கை எரிவாயு) போன்ற வழக்கமான ஆற்றல் மூலங்களை நாம் சார்ந்து இருப்பது குறிப்பிடத்தக்க சுற்றுச்சூழல் மற்றும் சுகாதார செலவுகளை ஏற்படுத்துகிறது. இந்த எரிபொருட்களை எரிப்பது அதிக அளவு பசுமை இல்ல வாயுக்களை, முக்கியமாக கார்பன் டை ஆக்சைடை வெளியிடுகிறது, இது வளிமண்டலத்தில் வெப்பத்தை சிக்க வைத்து காலநிலை மாற்றத்தை தூண்டுகிறது. இது உலகளாவிய வெப்பநிலை உயர்வு, மிகவும் தீவிரமான வானிலை நிகழ்வுகள், கடல் மட்டம் உயர்வு மற்றும் சுற்றுச்சூழல் அமைப்புகள் மற்றும் பல்லுயிர்களில் பேரழிவு தரும் தாக்கங்களுக்கு வழிவகுக்கிறது.",
+                impactConventionalContent2: "காலநிலை மாற்றத்திற்கு அப்பால், புதைபடிவ எரிபொருள் எரிப்பு துகள்கள், சல்பர் டை ஆக்சைடு மற்றும் நைட்ரஜன் ஆக்சைடுகள் போன்ற தீங்கு விளைவிக்கும் காற்று மாசுபடுத்திகளையும் உற்பத்தி செய்கிறது. இந்த மாசுபடுத்திகள் சுவாச நோய்கள், இதய நோய்கள் மற்றும் முன்கூட்டிய மரணங்களுக்கு பங்களிக்கின்றன, குறிப்பாக நகர்ப்புறங்களிலும் மின் உற்பத்தி நிலையங்களுக்கு அருகிலுள்ள சமூகங்களிலும். இந்த எரிபொருட்களை பிரித்தெடுப்பதும், கொண்டு செல்வதும் எண்ணெய் கசிவுகள், வாழ்விட அழிவு மற்றும் நீர் மாசுபாடு உள்ளிட்ட அபாயங்களையும் கொண்டுள்ளது.",
+                impactConventionalContent3: "மேலும், புதைபடிவ எரிபொருட்கள் வரையறுக்கப்பட்ட வளங்கள், அதாவது அவற்றின் வழங்கல் குறைவாக உள்ளது. இது ஆற்றல் பாதுகாப்பின்மையை உருவாக்குகிறது, பொருளாதாரங்களை நிலையற்ற விலைப் பளுக்களுக்கும் புவிசார் அரசியல் பதட்டங்களுக்கும் உட்படுத்துகிறது. சுற்றுச்சூழல் பாதுகாப்பிற்காக மட்டுமல்லாமல், பொது சுகாதாரம், பொருளாதார ஸ்திரத்தன்மை மற்றும் உலக அமைதிக்காகவும் இந்த தீங்கு விளைவிக்கும் மூலங்களிலிருந்து தூய, புதுப்பிக்கத்தக்க ஆற்றலை நோக்கி மாறுவது அவசியம்.",
+                visualizerTitle: "ஆற்றல் மாற்றத்தை காட்சிப்படுத்துங்கள்",
+                visualizerInstruction: "வழக்கமான மற்றும் தூய ஆற்றல் தாக்கங்களுக்கு இடையிலான வேறுபாட்டைக் காண பொத்தானைக் கிளிக் செய்யவும்!",
+                visualizerButtonConventional: "தூய ஆற்றலைக் காண்க!",
+                visualizerButtonClean: "வழக்கமான ஆற்றலைக் காண்க!",
+                shareIdeaTitle: "உங்கள் பசுமை சிந்தனையைப் பகிரவும்!",
+                shareIdeaInstruction: "உங்கள் சமூகத்தில் தூய ஆற்றல் அல்லது நிலைத்தன்மையை மேம்படுத்த ஒரு சிறந்த யோசனை உள்ளதா? எங்களுடன் பகிரவும்!",
+                ideaLabel: "உங்கள் யோசனை:",
+                ideaPlaceholder: "எ.கா., ஒரு சமூக துப்புரவு ஏற்பாடு, ஒரு உள்ளூர் உரம் தயாரிக்கும் திட்டத்தைத் தொடங்குதல்...",
+                ideaNameLabel: "உங்கள் பெயர் (விருப்பமானது):",
+                ideaNamePlaceholder: "அநாமதேய",
+                submitIdeaBtn: "யோசனையைச் சமர்ப்பிக்கவும்",
+                ideasSharedTitle: "சமூகத்தால் பகிரப்பட்ட யோசனைகள்:",
+                noIdeasYet: "இதுவரை எந்த யோசனையும் பகிரப்படவில்லை. முதலில் இருங்கள்!",
+                languageSelector: "மொழியைத் தேர்ந்தெடுக்கவும்:",
+                surveyTitle: "சமூக கருத்துக்கணிப்பு",
+                surveyInstructions: "உங்கள் உள்ளீட்டை நாங்கள் மதிக்கிறோம்! இந்த கருவித்தொகுப்பு பற்றி சில கேள்விகளுக்கு பதிலளிக்க ஒரு நிமிடம் ஒதுக்குங்கள்.",
+                surveyNameLabel: "உங்கள் பெயர் (விருப்பமானது)",
+                surveyNamePlaceholder: "ஜான் டோ",
+                surveyPlaceLabel: "உங்கள் நகரம்/ஊர் (விருப்பமானது)",
+                surveyPlacePlaceholder: "விசாகப்பட்டினம்",
+                surveyHelpfulness: "தூய ஆற்றல் பற்றிய உங்கள் விழிப்புணர்வை அதிகரிப்பதில் இந்த கருவித்தொகுப்பு எவ்வளவு பயனுள்ளதாக இருந்தது?",
+                surveyHelpfulOption1: "மிகவும் பயனுள்ளது",
+                surveyHelpfulOption2: "ஓரளவு பயனுள்ளது",
+                surveyHelpfulOption3: "பயனற்றது",
+                surveyTopics: "வேறு எந்த தூய ஆற்றல் தலைப்புகளை நீங்கள் உள்ளடக்கியதாகவோ அல்லது விரிவுபடுத்தப்பட்டதாகவோ பார்க்க விரும்புகிறீர்கள்?",
+                surveyFeedback: "உங்களுக்கு வேறு ஏதேனும் கருத்து அல்லது பரிந்துரைகள் உள்ளதா?",
+                surveySubmit: "கருத்தை சமர்ப்பி",
+                surveyThanks: "உங்கள் மதிப்புமிக்க கருத்துக்காக நன்றி! உங்கள் உள்ளீடு எங்களை மேம்படுத்த உதவுகிறது."
+            },
+            ml: { // Malayalam translations
+                appTitle: "ശുദ്ധ ഊർജ്ജ അവബോധ കേന്ദ്രം",
+                tagline: "സുസ്ഥിരമായ അറിവും പ്രവർത്തനവും ഉപയോഗിച്ച് കമ്മ്യൂണിറ്റികളെ ശാക്തീകരിക്കുക",
+                aboutTitle: "ശുദ്ധ ഊർജ്ജത്തെക്കുറിച്ച്",
+                aboutContent: "കാർബൺ ഉദ്വമനം കുറയ്ക്കുന്നതിനും കാലാവസ്ഥാ വ്യതിയാനത്തെ ചെറുക്കുന്നതിനും സുസ്ഥിരമായ ഭാവി ഉറപ്പാക്കുന്നതിനും ശുദ്ധ ഊർജ്ജ സ്രോതസ്സുകൾ നിർണായകമാണ്. സൂര്യപ്രകാശം, കാറ്റ്, ജലം, ഭൂമിക്കടിയിലെ താപം തുടങ്ങിയ പ്രകൃതിദത്ത പ്രക്രിയകളെ അവ ഉപയോഗപ്പെടുത്തുന്നു, പ്രവർത്തന സമയത്ത് വളരെ കുറഞ്ഞ അളവിലോ അല്ലെങ്കിൽ ഒരു ഹരിതഗൃഹ വാതകങ്ങളും മലിനീകരണങ്ങളും ഉത്പാദിപ്പിക്കുന്നില്ല. പരിമിതവും വായു മലിനീകരണത്തിന് കാരണമാകുന്നതുമായ ഫോസിൽ ഇന്ധനങ്ങളിൽ നിന്ന് വ്യത്യസ്തമായി, ശുദ്ധ ഊർജ്ജം അക്ഷയവും പരിസ്ഥിതി സൗഹൃദവുമായ ഒരു ബദൽ വാഗ്ദാനം ചെയ്യുന്നു. ശുദ്ധ ഊർജ്ജം സ്വീകരിക്കുന്നത് നമ്മുടെ ഗ്രഹത്തെ സംരക്ഷിക്കുക മാത്രമല്ല, ഊർജ്ജ സ്വാശ്രയത്വം വളർത്തുകയും, ഹരിത തൊഴിലവസരങ്ങൾ സൃഷ്ടിക്കുകയും, വീടുകൾക്കും വ്യവസായങ്ങൾക്കും ദീർഘകാല സാമ്പത്തിക ലാഭത്തിലേക്ക് നയിക്കുകയും ചെയ്യും.",
+                practicalTipsSubtitle: "നിങ്ങളുടെ വീടിനായുള്ള പ്രായോഗിക ഊർജ്ജ സംരക്ഷണ നുറുങ്ങുകൾ",
+                tip1Title: "എൽഇഡിയിലേക്ക് മാറുക",
+                tip1Content: "ഇൻകാൻഡസെന്റ് ബൾബുകൾക്ക് പകരം ഊർജ്ജ കാര്യക്ഷമമായ എൽഇഡി ലൈറ്റിംഗ് ഉപയോഗിക്കുക. എൽഇഡികൾക്ക് 80% വരെ കുറഞ്ഞ ഊർജ്ജം മതിയാകും, അവയ്ക്ക് കൂടുതൽ ആയുസ്സുണ്ട് (പലപ്പോഴും 15-25 വർഷം), വൈദ്യുതി ബില്ലിൽ പണം ലാഭിക്കുകയും ചെയ്യും.",
+                tip2Title: "'വാമ്പയർ' ഇലക്ട്രോണിക്സ് അൺപ്ലഗ് ചെയ്യുക",
+                tip2Content: "ചാർജറുകൾ, ടിവികൾ, കമ്പ്യൂട്ടറുകൾ, ഉപകരണങ്ങൾ എന്നിവയുൾപ്പെടെ പല ഇലക്ട്രോണിക്സുകളും ഓഫായിരിക്കുകയോ സ്റ്റാൻഡ്ബൈ മോഡിൽ ആയിരിക്കുകയോ ചെയ്യുമ്പോൾ പോലും 'ഫാന്റം' അല്ലെങ്കിൽ 'വാമ്പയർ' ഊർജ്ജം ഉപയോഗിക്കുന്നു. അവ അൺപ്ലഗ് ചെയ്യുക അല്ലെങ്കിൽ വൈദ്യുതി പൂർണ്ണമായി വിച്ഛേദിക്കാൻ സ്മാർട്ട് പവർ സ്ട്രിപ്പുകൾ ഉപയോഗിക്കുക.",
+                tip3Title: "തെർമോസ്റ്റാറ്റ് ക്രമീകരണങ്ങൾ ഒപ്റ്റിമൈസ് ചെയ്യുക",
+                tip3Content: "വേനൽക്കാലത്ത് നിങ്ങളുടെ തെർമോസ്റ്റാറ്റ് കുറച്ച് ഡിഗ്രി കൂട്ടിയും, തണുപ്പുകാലത്ത് കുറച്ചും ക്രമീകരിക്കുക. പ്രോഗ്രാമബിൾ അല്ലെങ്കിൽ സ്മാർട്ട് തെർമോസ്റ്റാറ്റുകൾക്ക് ഇത് സ്വയമേവ ചെയ്യാനാകും, ഇത് ചൂടാക്കൽ, തണുപ്പിക്കൽ ചെലവുകളിൽ ഗണ്യമായ ലാഭം നൽകുന്നു.",
+                tip4Title: "വായു ചോർച്ചകൾ അടയ്ക്കുക & ഇൻസുലേറ്റ് ചെയ്യുക",
+                tip4Content: "ജനലുകൾ, വാതിലുകൾ, ഔട്ട്‌ലെറ്റുകൾ, മച്ചുകൾ എന്നിവക്ക് ചുറ്റുമുള്ള വായു ചോർച്ചകൾ പരിശോധിക്കുക. കാൽക്ക്, വെതർസ്‌ട്രിപ്പിംഗ് അല്ലെങ്കിൽ ഇൻസുലേഷൻ ചേർത്ത് ഈ ചോർച്ചകൾ അടയ്ക്കുന്നത് നിങ്ങളുടെ വീടിന്റെ ഊർജ്ജ കാര്യക്ഷമതയും സൗകര്യവും ഗണ്യമായി മെച്ചപ്പെടുത്തും.",
+                tip5Title: "കാര്യക്ഷമമായ ഉപകരണങ്ങൾ തിരഞ്ഞെടുക്കുക",
+                tip5Content: "പഴയ ഉപകരണങ്ങൾ മാറ്റുമ്പോൾ ENERGY STAR® സർട്ടിഫൈ ചെയ്ത മോഡലുകൾ തിരഞ്ഞെടുക്കുക. അവ വെള്ളവും വൈദ്യുതിയും ലാഭിച്ച്, കൂടുതൽ ഊർജ്ജ കാര്യക്ഷമമായി രൂപകൽപ്പന ചെയ്തിട്ടുള്ളതാണ്.",
+                tip6Title: "പ്രകൃതിദത്ത വെളിച്ചവും വായുസഞ്ചാരവും ഉപയോഗിക്കുക",
+                tip6Content: "കർട്ടനുകളും ബ്ലൈൻഡുകളും തുറന്ന് പ്രകൃതിദത്തമായ പകൽ വെളിച്ചം പരമാവധി പ്രയോജനപ്പെടുത്തുക. കാലാവസ്ഥ അനുവദിക്കുമ്പോൾ എയർ കണ്ടീഷനിംഗിന് പകരം പ്രകൃതിദത്തമായ വായുസഞ്ചാരം (ജനലുകൾ തുറക്കുന്നത്) ഉപയോഗിക്കുക.",
+                tip7Title: "HVAC സിസ്റ്റങ്ങൾ പരിപാലിക്കുക",
+                tip7Content: "HVAC ഫിൽട്ടറുകൾ പതിവായി വൃത്തിയാക്കുകയോ മാറ്റുകയോ ചെയ്യുക, ഒപ്പം നിങ്ങളുടെ ചൂടാക്കൽ, തണുപ്പിക്കൽ സിസ്റ്റങ്ങൾക്ക് വർഷം തോറും പ്രൊഫഷണൽ സേവനം നൽകുക. ഇത് അവയുടെ കാര്യക്ഷമതയും ആയുസ്സും വർദ്ധിപ്പിക്കും.",
+                whyMatterTitle: "നമ്മുടെ സമൂഹത്തിന് ശുദ്ധ ഊർജ്ജം എന്തുകൊണ്ട് പ്രധാനം",
+                whyMatterContent: "ശുദ്ധ ഊർജ്ജത്തിലേക്കുള്ള മാറ്റം നമ്മുടെ പ്രാദേശിക സമൂഹങ്ങൾക്ക് നേരിട്ട് നിരവധി പ്രയോജനങ്ങൾ നൽകുന്നു. ഇത് ശുദ്ധമായ വായുവിന് കാരണമാകുന്നു, പൊതുജനാരോഗ്യം മെച്ചപ്പെടുത്തുകയും ശ്വാസംമുട്ടൽ രോഗങ്ങൾ കുറയ്ക്കുകയും ചെയ്യുന്നു. പ്രാദേശികമായി ലഭിക്കുന്ന പുനരുപയോഗിക്കാവുന്ന ഊർജ്ജം, സ്ഥാപനം, പരിപാലനം, നിർമ്മാണം എന്നിവയിൽ പുതിയ തൊഴിലവസരങ്ങൾ സൃഷ്ടിച്ച് നമ്മുടെ സമ്പദ്‌വ്യവസ്ഥയെ ശക്തിപ്പെടുത്തും. കൂടാതെ, ഇത് ഊർജ്ജ സുരക്ഷ വർദ്ധിപ്പിക്കുന്നു, ഇത് നമ്മുടെ സമൂഹത്തെ പരമ്പരാഗത ഇന്ധനങ്ങളുടെ വിലയിലെ ഏറ്റക്കുറച്ചിലുകൾക്കും വിതരണ തടസ്സങ്ങൾക്കും വിധേയമാക്കുന്നതിൽ നിന്ന് കുറയ്ക്കുന്നു. ശുദ്ധ ഊർജ്ജം സ്വീകരിക്കുന്നതിലൂടെ, നമ്മൾ ആരോഗ്യകരമായ ഒരു പരിസ്ഥിതിയിലും, ശക്തമായ ഒരു സമ്പദ്‌വ്യവസ്ഥയിലും, എല്ലാവർക്കും കൂടുതൽ പ്രതിരോധശേഷിയുള്ള ഒരു ഭാവിയിലും നിക്ഷേപം നടത്തുന്നു.",
+                sustainabilityTitle: "സുസ്ഥിരതയും നമ്മുടെ കൂട്ടായ ഭാവിയും",
+                sustainabilityContent1: "സുസ്ഥിരത എന്നത് ഭാവി തലമുറകൾക്ക് അവരുടെ സ്വന്തം ആവശ്യങ്ങൾ നിറവേറ്റാനുള്ള കഴിവ് നഷ്ടപ്പെടുത്താതെ നിലവിലെ ആവശ്യങ്ങൾ നിറവേറ്റുക എന്നതാണ്. ഇതിന് മൂന്ന് പ്രധാന തൂണുകളുണ്ട്: പരിസ്ഥിതി സംരക്ഷണം, സാമൂഹിക സമത്വം, സാമ്പത്തിക അതിജീവനക്ഷമത. ഇത് ജീവിതം, ഉപഭോഗം, ഉത്പാദനം എന്നിവയെക്കുറിച്ചുള്ള സമഗ്രമായ സമീപനമാണ്.",
+                sustainabilityContent2: "സുസ്ഥിരത സ്വീകരിക്കുന്നത് മാലിന്യം കുറയ്ക്കുക (കുറയ്ക്കുക, പുനരുപയോഗിക്കുക, പുനരുപയോഗം ചെയ്യുക), വെള്ളം സംരക്ഷിക്കുക, പ്രാദേശികവും ധാർമ്മികവുമായ ബിസിനസ്സുകളെ പിന്തുണയ്ക്കുക, ജൈവവൈവിധ്യം പ്രോത്സാഹിപ്പിക്കുക തുടങ്ങിയ കാര്യങ്ങൾ ഉൾക്കൊള്ളുന്നു. ഒരുമിച്ച് പ്രവർത്തിക്കുന്നതിലൂടെ, നമ്മുടെ ഗ്രഹവുമായി യോജിച്ച് വളരുന്ന പ്രതിരോധശേഷിയുള്ള കമ്മ്യൂണിറ്റികൾ കെട്ടിപ്പടുക്കാൻ നമുക്ക് കഴിയും, എല്ലാവർക്കും സമൃദ്ധമായ ഒരു ഭാവി ഉറപ്പാക്കുന്നു.",
+                impactConventionalTitle: "പരമ്പരാഗത ഊർജ്ജത്തിന്റെ ആഘാതം",
+                impactConventionalContent1: "ഫോസിൽ ഇന്ധനങ്ങൾ (കൽക്കരി, എണ്ണ, പ്രകൃതിവാതകം) പോലുള്ള പരമ്പരാഗത ഊർജ്ജ സ്രോതസ്സുകളിലുള്ള നമ്മുടെ ആശ്രിതത്വം പരിസ്ഥിതിയിലും ആരോഗ്യത്തിലും വലിയ ചിലവുകൾ വരുത്തുന്നു. ഈ ഇന്ധനങ്ങൾ കത്തിക്കുന്നത് വലിയ അളവിൽ ഹരിതഗൃഹ വാതകങ്ങൾ, പ്രധാനമായും കാർബൺ ഡൈ ഓക്സൈഡ് പുറത്തുവിടുന്നു, ഇത് അന്തരീക്ഷത്തിലെ ചൂട് നിലനിർത്തുകയും കാലാവസ്ഥാ വ്യതിയാനത്തിന് കാരണമാവുകയും ചെയ്യുന്നു. ഇത് ആഗോള താപനില വർധനവ്, കൂടുതൽ തീവ്രമായ കാലാവസ്ഥാ പ്രതിഭാസങ്ങൾ, കടൽനിരപ്പ് ഉയരുന്നത്, ആവാസവ്യവസ്ഥകളിലും ജൈവവൈവിധ്യത്തിലും വലിയ പ്രത്യാഘാതങ്ങൾ എന്നിവയിലേക്ക് നയിക്കുന്നു.",
+                impactConventionalContent2: "കാലാവസ്ഥാ വ്യതിയാനത്തിനപ്പുറം, ഫോസിൽ ഇന്ധനം കത്തുന്നത് ദോഷകരമായ വായു മലിനീകരണ വസ്തുക്കളായ കണികാ പദാർത്ഥം, സൾഫർ ഡൈ ഓക്സൈഡ്, നൈട്രജൻ ഓക്സൈഡുകൾ എന്നിവയും ഉത്പാദിപ്പിക്കുന്നു. ഈ മലിനീകരണ വസ്തുക്കൾ ശ്വാസകോശ സംബന്ധമായ അസുഖങ്ങൾ, ഹൃദയ രോഗങ്ങൾ, അകാല മരണങ്ങൾ എന്നിവക്ക് കാരണമാകുന്നു, പ്രത്യേകിച്ച് നഗരപ്രദേശങ്ങളിലും വൈദ്യുതി നിലയങ്ങൾക്ക് സമീപമുള്ള സമൂഹങ്ങളിലും. ഈ ഇന്ധനങ്ങളുടെ ഖനനവും ഗതാഗതവും എണ്ണ ചോർച്ച, ആവാസവ്യവസ്ഥയുടെ നാശം, ജല മലിനീകരണം എന്നിവയുൾപ്പെടെയുള്ള അപകടസാധ്യതകളും ഉൾക്കൊള്ളുന്നു.",
+                impactConventionalContent3: "കൂടാതെ, ഫോസിൽ ഇന്ധനങ്ങൾ പരിമിതമായ വിഭവങ്ങളാണ്, അതായത് അവയുടെ ലഭ്യത പരിമിതമാണ്. ഇത് ഊർജ്ജ അരക്ഷിതാവസ്ഥ സൃഷ്ടിക്കുന്നു, സമ്പദ്‌വ്യവസ്ഥകളെ അസ്ഥിരമായ വിലയിലെ ഏറ്റക്കുറച്ചിലുകൾക്കും ഭൗമരാഷ്ട്രീയ പിരിമുറുക്കങ്ങൾക്കും വിധേയമാക്കുന്നു. ഈ ദോഷകരമായ സ്രോതസ്സുകളിൽ നിന്ന് മാറി ശുദ്ധമായ, പുനരുപയോഗിക്കാവുന്ന ഊർജ്ജത്തിലേക്ക് മാറുന്നത് പരിസ്ഥിതി സംരക്ഷണത്തിന് മാത്രമല്ല, പൊതുജനാരോഗ്യം, സാമ്പത്തിക സ്ഥിരത, ലോക സമാധാനം എന്നിവക്കും അത്യന്താപേക്ഷിതമാണ്.",
+                visualizerTitle: "ഊർജ്ജ പരിവർത്തനം ദൃശ്യവൽക്കരിക്കുക",
+                visualizerInstruction: "പരമ്പരാഗതവും ശുദ്ധവുമായ ഊർജ്ജ ആഘാതങ്ങൾ തമ്മിലുള്ള വ്യത്യാസം കാണാൻ ബട്ടൺ ക്ലിക്കുചെയ്യുക!",
+                visualizerButtonConventional: "ശുദ്ധ ഊർജ്ജം കാണുക!",
+                visualizerButtonClean: "പരമ്പരാഗത ഊർജ്ജം കാണുക!",
+                shareIdeaTitle: "നിങ്ങളുടെ ഹരിത ആശയം പങ്കിടുക!",
+                shareIdeaInstruction: "നിങ്ങളുടെ കമ്മ്യൂണിറ്റിയിൽ ശുദ്ധ ഊർജ്ജമോ സുസ്ഥിരതയോ പ്രോത്സാഹിപ്പിക്കുന്നതിന് ഒരു മികച്ച ആശയം ഉണ്ടോ? അത് ഞങ്ങളുമായി പങ്കിടുക!",
+                ideaLabel: "നിങ്ങളുടെ ആശയം:",
+                ideaPlaceholder: "ഉദാഹരണത്തിന്, ഒരു കമ്മ്യൂണിറ്റി ക്ലീൻ-അപ്പ് സംഘടിപ്പിക്കുക, ഒരു പ്രാദേശിക കമ്പോസ്റ്റിംഗ് പ്രോഗ്രാം ആരംഭിക്കുക...",
+                ideaNameLabel: "നിങ്ങളുടെ പേര് (ഓപ്ഷണൽ):",
+                ideaNamePlaceholder: "അജ്ഞാതം",
+                submitIdeaBtn: "ആശയം സമർപ്പിക്കുക",
+                ideasSharedTitle: "സമൂഹത്താൽ പങ്കിട്ട ആശയങ്ങൾ:",
+                noIdeasYet: "ഇതുവരെ ആശയങ്ങളൊന്നും പങ്കിട്ടിട്ടില്ല. ആദ്യം ആകുക!",
+                languageSelector: "ഭാഷ തിരഞ്ഞെടുക്കുക:",
+                surveyTitle: "കമ്മ്യൂണിറ്റി ഫീഡ്ബാക്ക് സർവേ",
+                surveyInstructions: "നിങ്ങളുടെ അഭിപ്രായത്തെ ഞങ്ങൾ വിലമതിക്കുന്നു! ഈ ടൂൾകിറ്റിനെക്കുറിച്ച് കുറച്ച് ചോദ്യങ്ങൾക്ക് ഉത്തരം നൽകാൻ ഒരു നിമിഷം ചെലവഴിക്കുക.",
+                surveyNameLabel: "നിങ്ങളുടെ പേര് (ഓപ്ഷണൽ)",
+                surveyNamePlaceholder: "ജോൺ ഡോ",
+                surveyPlaceLabel: "നിങ്ങളുടെ നഗരം/പട്ടണം (ഓപ്ഷണൽ)",
+                surveyPlacePlaceholder: "വിശാഖപട്ടണം",
+                surveyHelpfulness: "ശുദ്ധ ഊർജ്ജത്തെക്കുറിച്ചുള്ള നിങ്ങളുടെ അവബോധം വർദ്ധിപ്പിക്കുന്നതിന് ഈ ടൂൾകിറ്റ് എത്രത്തോളം സഹായകമായിരുന്നു?",
+                surveyHelpfulOption1: "വളരെ സഹായകരം",
+                surveyHelpfulOption2: "ഒരു പരിധി വരെ സഹായകരം",
+                surveyHelpfulOption3: "സഹായകമല്ലാത്തത്",
+                surveyTopics: "ശുദ്ധ ഊർജ്ജത്തെക്കുറിച്ചുള്ള മറ്റ് ഏതൊക്കെ വിഷയങ്ങളാണ് നിങ്ങൾ ഉൾപ്പെടുത്താനോ വികസിപ്പിക്കാനോ ആഗ്രഹിക്കുന്നത്?",
+                surveyFeedback: "നിങ്ങൾക്ക് മറ്റെന്തെങ്കിലും അഭിപ്രായങ്ങളോ നിർദ്ദേശങ്ങളോ ഉണ്ടോ?",
+                surveySubmit: "ഫീഡ്ബാക്ക് സമർപ്പിക്കുക",
+                surveyThanks: "നിങ്ങളുടെ വിലപ്പെട്ട അഭിപ്രായത്തിന് നന്ദി! നിങ്ങളുടെ അഭിപ്രായം മെച്ചപ്പെടുത്താൻ ഞങ്ങളെ സഹായിക്കുന്നു."
+            },
+            te: { // Telugu translations
+                appTitle: "స్వచ్ఛ ఇంధన అవగాహన కేంద్రం",
+                tagline: "స్థిరమైన జ్ఞానం మరియు చర్యలతో సంఘాలను శక్తివంతం చేయడం",
+                aboutTitle: "స్వచ్ఛ ఇంధనం గురించి",
+                aboutContent: "కార్బన్ ఉద్గారాలను తగ్గించడానికి, వాతావరణ మార్పులను ఎదుర్కోవడానికి మరియు స్థిరమైన భవిష్యత్తును నిర్ధారించడానికి స్వచ్ఛ ఇంధన వనరులు చాలా ముఖ్యమైనవి. అవి సూర్యకాంతి, గాలి, నీరు మరియు భూఉష్ణ శక్తి వంటి సహజ ప్రక్రియలను ఉపయోగించుకుంటాయి, కార్యకలాపాల సమయంలో చాలా తక్కువ లేదా గ్రీన్హౌస్ వాయువులు లేదా కాలుష్య కారకాలను ఉత్పత్తి చేయవు. పరిమితంగా ఉండే మరియు వాయు కాలుష్యానికి దోహదపడే శిలాజ ఇంధనాలకు భిన్నంగా, స్వచ్ఛ ఇంధనం అపరిమితమైన మరియు పర్యావరణ అనుకూలమైన ప్రత్యామ్నాయాన్ని అందిస్తుంది. స్వచ్ఛ ఇంధనాన్ని స్వీకరించడం వల్ల మన గ్రహాన్ని రక్షించడమే కాకుండా, ఇంధన స్వాతంత్ర్యాన్ని పెంపొందిస్తుంది, గ్రీన్ ఉద్యోగాలను సృష్టిస్తుంది మరియు గృహాలు మరియు పరిశ్రమలకు దీర్ఘకాలిక ఆర్థిక పొదుపులకు దారితీస్తుంది.",
+                practicalTipsSubtitle: "మీ ఇంటికి ఆచరణాత్మక ఇంధన పొదుపు చిట్కాలు",
+                tip1Title: "LED లకు మారండి",
+                tip1Content: "ఇన్కాండిసెంట్ బల్బుల స్థానంలో శక్తి-సమర్థవంతమైన LED లైటింగ్ ఉపయోగించండి. LED లు 80% తక్కువ శక్తిని వినియోగిస్తాయి, చాలా ఎక్కువ కాలం (తరచుగా 15-25 సంవత్సరాలు) ఉంటాయి మరియు విద్యుత్ బిల్లులపై డబ్బు ఆదా చేస్తాయి.",
+                tip2Title: "'వాంపైర్' ఎలక్ట్రానిక్స్ అన్‌ప్లగ్ చేయండి",
+                tip2Content: "చాలా ఎలక్ట్రానిక్స్ (ఛార్జర్‌లు, టీవీలు, కంప్యూటర్లు, ఉపకరణాలు) ఆఫ్‌లో ఉన్నప్పుడు లేదా స్టాండ్‌బై మోడ్‌లో ఉన్నప్పుడు కూడా 'ఫాంటమ్' లేదా 'వాంపైర్' శక్తిని వినియోగిస్తాయి. వాటిని అన్‌ప్లగ్ చేయండి లేదా శక్తిని పూర్తిగా తగ్గించడానికి స్మార్ట్ పవర్ స్ట్రిప్స్ ఉపయోగించండి.",
+                tip3Title: "థర్మోస్టాట్ సెట్టింగ్‌లను ఆప్టిమైజ్ చేయండి",
+                tip3Content: "వేసవిలో మీ థర్మోస్టాట్‌ను కొన్ని డిగ్రీలు ఎక్కువగా మరియు శీతాకాలంలో తక్కువగా సర్దుబాటు చేయండి. ప్రోగ్రామబుల్ లేదా స్మార్ట్ థర్మోస్టాట్‌లు దీనిని స్వయంచాలకంగా చేయగలవు, గణనీయమైన తాపన మరియు శీతలీకరణ ఖర్చులను ఆదా చేస్తాయి.",
+                tip4Title: "గాలి లీక్‌లను సీల్ చేయండి & ఇన్సులేట్ చేయండి",
+                tip4Content: "కిటికీలు, తలుపులు, అవుట్‌లెట్‌లు మరియు అటారి చుట్టూ గాలి లీక్‌ల కోసం తనిఖీ చేయండి. కాక్, వెదర్‌స్ట్రిప్పింగ్ లేదా ఇన్సులేషన్ జోడించడం ద్వారా ఈ లీక్‌లను సీల్ చేయడం వల్ల మీ ఇంటి ఇంధన సామర్థ్యం మరియు సౌకర్యం గణనీయంగా మెరుగుపడుతుంది.",
+                tip5Title: "సమర్థవంతమైన ఉపకరణాల ఎంపికలు",
+                tip5Content: "పాత ఉపకరణాలను మార్చేటప్పుడు, ENERGY STAR® సర్టిఫైడ్ మోడల్‌ల కోసం చూడండి. అవి గణనీయంగా ఎక్కువ ఇంధన-సమర్థవంతంగా ఉండేలా రూపొందించబడ్డాయి, నీరు మరియు విద్యుత్తును ఆదా చేస్తాయి.",
+                tip6Title: "సహజ కాంతి మరియు వెంటిలేషన్‌ను ఉపయోగించండి",
+                tip6Content: "కర్టెన్‌లు మరియు బ్లైండ్‌లను తెరవడం ద్వారా సహజ పగటి వెలుతురును పెంచండి. వాతావరణం అనుమతించినప్పుడు ఎయిర్ కండిషనింగ్‌కు బదులుగా సహజ వెంటిలేషన్‌ను (కిటికీలు తెరవడం) ఉపయోగించండి.",
+                tip7Title: "HVAC సిస్టమ్‌లను నిర్వహించండి",
+                tip7Content: "HVAC ఫిల్టర్‌లను క్రమం తప్పకుండా శుభ్రం చేయండి లేదా మార్చండి మరియు సరైన సామర్థ్యం మరియు దీర్ఘాయువు కోసం మీ తాపన మరియు శీతలీకరణ వ్యవస్థలను ఏటా వృత్తిపరంగా సేవ చేయించుకోండి.",
+                whyMatterTitle: "మన సమాజానికి స్వచ్ఛ ఇంధనం ఎందుకు ముఖ్యం",
+                whyMatterContent: "స్వచ్ఛ ఇంధనానికి మారడం మన స్థానిక సమాజాలకు నేరుగా అనేక ప్రయోజనాలను తెస్తుంది. ఇది శుభ్రమైన గాలికి దారితీస్తుంది, ప్రజారోగ్యాన్ని మెరుగుపరుస్తుంది మరియు శ్వాసకోశ వ్యాధులను తగ్గిస్తుంది. స్థానికంగా లభించే పునరుత్పాదక శక్తి, సంస్థాపన, నిర్వహణ మరియు తయారీలో కొత్త ఉద్యోగాలను సృష్టించడం ద్వారా మన ఆర్థిక వ్యవస్థను పెంచుతుంది. అంతేకాకుండా, ఇది ఇంధన భద్రతను మెరుగుపరుస్తుంది, మన సమాజాన్ని సాంప్రదాయ ఇంధనాల ధరల హెచ్చుతగ్గులు మరియు సరఫరా అంతరాయాలకు తక్కువ హానికరంగా చేస్తుంది. స్వచ్ఛ ఇంధనాన్ని స్వీకరించడం ద్వారా, మనం ఆరోగ్యకరమైన వాతావరణంలో, బలమైన ఆర్థిక వ్యవస్థలో మరియు అందరికీ మరింత స్థితిస్థాపక భవిష్యత్తులో పెట్టుబడి పెడతాము.",
+                sustainabilityTitle: "స్థిరత్వం మరియు మన సామూహిక భవిష్యత్తు",
+                sustainabilityContent1: "స్థిరత్వం అంటే భవిష్యత్ తరాల వారు తమ అవసరాలను తీర్చగల సామర్థ్యాన్ని రాజీ పడకుండా ప్రస్తుత అవసరాలను తీర్చడం. ఇది మూడు ప్రధాన స్తంభాలను కలిగి ఉంటుంది: పర్యావరణ రక్షణ, సామాజిక సమానత్వం మరియు ఆర్థిక సాధికారత. ఇది జీవనం, వినియోగం మరియు ఉత్పత్తికి ఒక సంపూర్ణ విధానం.",
+                sustainabilityContent2: "స్థిరత్వాన్ని స్వీకరించడం అంటే వ్యర్థాల తగ్గింపు (తగ్గించడం, తిరిగి ఉపయోగించడం, పునరుద్ధరించడం), నీటిని సంరక్షించడం, స్థానిక మరియు నైతిక వ్యాపారాలకు మద్దతు ఇవ్వడం మరియు జీవవైవిధ్యాన్ని ప్రోత్సహించడం వంటి పద్ధతులను అవలంబించడం. కలిసి పనిచేయడం ద్వారా, మనం మన గ్రహంతో సామరస్యంగా అభివృద్ధి చెందే స్థితిస్థాపక సమాజాలను నిర్మించగలము, అందరికీ సంపన్నమైన భవిష్యత్తును నిర్ధారిస్తుంది.",
+                impactConventionalTitle: "సాంప్రదాయ శక్తి యొక్క ప్రభావం",
+                impactConventionalContent1: "శిలాజ ఇంధనాల (బొగ్గు, చమురు, సహజ వాయువు) వంటి సాంప్రదాయ శక్తి వనరులపై మన ఆధారపడటం గణనీయమైన పర్యావరణ మరియు ఆరోగ్య వ్యయాన్ని కలిగి ఉంటుంది. ఈ ఇంధనాలను మండించడం వలన పెద్ద మొత్తంలో గ్రీన్హౌస్ వాయువులు, ప్రధానంగా కార్బన్ డయాక్సైడ్ విడుదల అవుతాయి, ఇవి వాతావరణంలో వేడిని బంధిస్తాయి మరియు వాతావరణ మార్పులకు దారితీస్తాయి. ఇది పెరుగుతున్న ప్రపంచ ఉష్ణోగ్రతలు, మరింత తీవ్రమైన వాతావరణ సంఘటనలు, సముద్ర మట్టాలు పెరగడం మరియు పర్యావరణ వ్యవస్థలు మరియు జీవవైవిధ్యంపై వినాశకరమైన ప్రభావాలకు దారితీస్తుంది.",
+                impactConventionalContent2: "వాతావరణ మార్పులకు మించి, శిలాజ ఇంధనం దహనం పార్టిక్యులేట్ మ్యాటర్, సల్ఫర్ డయాక్సైడ్ మరియు నైట్రోజన్ ఆక్సైడ్‌ల వంటి హానికరమైన వాయు కాలుష్య కారకాలను కూడా ఉత్పత్తి చేస్తుంది. ఈ కాలుష్య కారకాలు శ్వాసకోశ వ్యాధులు, గుండె జబ్బులు మరియు అకాల మరణాలకు దోహదపడతాయి, ముఖ్యంగా పట్టణ ప్రాంతాలలో మరియు విద్యుత్ ప్లాంట్ల సమీపంలోని సంఘాలలో. ఈ ఇంధనాల వెలికితీత మరియు రవాణా కూడా చమురు చిందడం, ఆవాసాల విధ్వంసం మరియు నీటి కాలుష్యం వంటి నష్టాలను కలిగి ఉంటాయి.",
+                impactConventionalContent3: "అంతేకాకుండా, శిలాజ ఇంధనాలు పరిమిత వనరులు, అంటే వాటి సరఫరా పరిమితం. ఇది శక్తి అభద్రతను సృష్టిస్తుంది, ఆర్థిక వ్యవస్థలను అస్థిర ధరల హెచ్చుతగ్గులు మరియు భౌగోళిక రాజకీయ ఉద్రిక్తతలకు గురి చేస్తుంది. పర్యావరణ పరిరక్షణకు మాత్రమే కాకుండా, ప్రజారోగ్యం, ఆర్థిక స్థిరత్వం మరియు ప్రపంచ శాంతికి కూడా ఈ హానికరమైన వనరుల నుండి దూరంగా స్వచ్ఛమైన, పునరుత్పాదక శక్తి వైపు మారడం చాలా అవసరం.",
+                visualizerTitle: "శక్తి మార్పును దృశ్యమానం చేయండి",
+                visualizerInstruction: "సాంప్రదాయ మరియు స్వచ్ఛమైన శక్తి ప్రభావాల మధ్య వ్యత్యాసాన్ని చూడటానికి బటన్‌ను క్లిక్ చేయండి!",
+                visualizerButtonConventional: "స్వచ్ఛమైన శక్తిని చూడండి!",
+                visualizerButtonClean: "సాంప్రదాయ శక్తిని చూడండి!",
+                shareIdeaTitle: "మీ గ్రీన్ ఐడియాను పంచుకోండి!",
+                shareIdeaInstruction: "మీ సంఘంలో స్వచ్ఛమైన శక్తి లేదా స్థిరత్వాన్ని ప్రోత్సహించడానికి మీకు గొప్ప ఆలోచన ఉందా? మాతో పంచుకోండి!",
+                ideaLabel: "మీ ఆలోచన:",
+                ideaPlaceholder: "ఉదా., ఒక సంఘ పారిశుధ్య కార్యక్రమాన్ని నిర్వహించండి, స్థానిక కంపోస్టింగ్ కార్యక్రమాన్ని ప్రారంభించండి...",
+                ideaNameLabel: "మీ పేరు (ఐచ్ఛికం):",
+                ideaNamePlaceholder: "అజ్ఞాత",
+                submitIdeaBtn: "ఆలోచనను సమర్పించండి",
+                ideasSharedTitle: "సంఘం పంచుకున్న ఆలోచనలు:",
+                noIdeasYet: "ఇప్పటివరకు ఎటువంటి ఆలోచనలు భాగస్వామ్యం చేయబడలేదు. మొదటివారు అవ్వండి!",
+                languageSelector: "భాషను ఎంచుకోండి:",
+                surveyTitle: "సమాజ అభిప్రాయ సర్వే",
+                surveyInstructions: "మీ అభిప్రాయాన్ని మేము విలువైనదిగా భావిస్తున్నాము! దయచేసి ఈ టూల్‌కిట్ గురించి కొన్ని ప్రశ్నలకు సమాధానం ఇవ్వడానికి కొద్ది సమయం కేటాయించండి.",
+                surveyNameLabel: "మీ పేరు (ఐచ్ఛికం)",
+                surveyNamePlaceholder: "జాన్ డో",
+                surveyPlaceLabel: "మీ నగరం/పట్టణం (ఐచ్ఛికం)",
+                surveyPlacePlaceholder: "విశాఖపట్నం",
+                surveyHelpfulness: "స్వచ్ఛ ఇంధనం గురించి మీ అవగాహన పెంచడంలో ఈ టూల్‌కిట్ ఎంతవరకు సహాయపడింది?",
+                surveyHelpfulOption1: "చాలా సహాయకరంగా ఉంది",
+                surveyHelpfulOption2: "కొంత సహాయకరంగా ఉంది",
+                surveyHelpfulOption3: "సహాయకరంగా లేదు",
+                surveyTopics: "స్వచ్ఛ ఇంధనం గురించి మీరు ఇంకేమైనా అంశాలను కవర్ చేయాలని లేదా విస్తరించాలని అనుకుంటున్నారా?",
+                surveyFeedback: "మీకు ఇంకేమైనా అభిప్రాయం లేదా సూచనలు ఉన్నాయా?",
+                surveySubmit: "అభిప్రాయాన్ని సమర్పించండి",
+                surveyThanks: "మీ విలువైన అభిప్రాయానికి ధన్యవాతికలు! మీ అభిప్రాయం మాకు మెరుగుపరచడంలో సహాయపడుతుంది."
+            }
+        };
+
+        // Function to update all UI elements based on the current language
+        function updateUIForLanguage(lang) {
+            const t = translations[lang];
+
+            // Header
+            document.getElementById('app-title').textContent = t.appTitle;
+            document.getElementById('tagline').textContent = t.tagline;
+            document.getElementById('language-selector').textContent = t.languageSelector;
+
+            // About Clean Energy (now includes tips)
+            document.getElementById('about-title').innerHTML = `<svg class="w-9 h-9 mr-3 text-blue-600 animate-pulsate-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd"></path></svg>${t.aboutTitle}`;
+            document.getElementById('about-content').textContent = t.aboutContent;
+            document.getElementById('practical-tips-subtitle').innerHTML = `<svg class="w-8 h-8 mr-2 text-orange-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>${t.practicalTipsSubtitle}`;
+
+            document.getElementById('tip1-title').textContent = t.tip1Title;
+            document.getElementById('tip1-content').textContent = t.tip1Content;
+            document.getElementById('tip2-title').textContent = t.tip2Title;
+            document.getElementById('tip2-content').textContent = t.tip2Content;
+            document.getElementById('tip3-title').textContent = t.tip3Title;
+            document.getElementById('tip3-content').textContent = t.tip3Content;
+            document.getElementById('tip4-title').textContent = t.tip4Title;
+            document.getElementById('tip4-content').textContent = t.tip4Content;
+            document.getElementById('tip5-title').textContent = t.tip5Title;
+            document.getElementById('tip5-content').textContent = t.tip5Content;
+            document.getElementById('tip6-title').textContent = t.tip6Title;
+            document.getElementById('tip6-content').textContent = t.tip6Content;
+            document.getElementById('tip7-title').textContent = t.tip7Title;
+            document.getElementById('tip7-content').textContent = t.tip7Content;
+
+
+            // Why Clean Energy Matters
+            document.getElementById('why-matter-title').innerHTML = `<svg class="w-9 h-9 mr-3 text-teal-600 animate-pulsate-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd"></path></svg>${t.whyMatterTitle}`;
+            document.getElementById('why-matter-content').textContent = t.whyMatterContent;
+
+            // Sustainability & Our Collective Future
+            document.getElementById('sustainability-title').innerHTML = `<svg class="w-9 h-9 mr-3 text-pink-600 animate-pulsate-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a1 1 0 011-1h14a1 1 0 110 2H3a1 1 0 01-1-1zM5 15a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"></path></svg>${t.sustainabilityTitle}`;
+            document.getElementById('sustainability-content-1').textContent = t.sustainabilityContent1;
+            document.getElementById('sustainability-content-2').textContent = t.sustainabilityContent2;
+
+            // The Impact of Conventional Energy (NEW)
+            document.getElementById('impact-conventional-title').innerHTML = `<svg class="w-9 h-9 mr-3 text-red-600 animate-shake-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"></path></svg>${t.impactConventionalTitle}`;
+            document.getElementById('impact-conventional-content-1').textContent = t.impactConventionalContent1;
+            document.getElementById('impact-conventional-content-2').textContent = t.impactConventionalContent2;
+            document.getElementById('impact-conventional-content-3').textContent = t.impactConventionalContent3;
+
+            // Interactive Energy Transition Visualizer
+            document.getElementById('visualizer-title').innerHTML = `<svg class="w-9 h-9 mr-3 text-yellow-600 animate-pulsate-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>${t.visualizerTitle}`;
+            document.getElementById('visualizer-instruction').textContent = t.visualizerInstruction;
+            document.getElementById('toggle-visualizer-btn').textContent = isConventionalEnergy ? t.visualizerButtonConventional : t.visualizerButtonClean;
+
+            // Share Your Green Idea!
+            document.getElementById('share-idea-title').innerHTML = `<svg class="w-9 h-9 mr-3 text-lime-600 animate-pulsate-subtle" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>${t.shareIdeaTitle}`;
+            document.getElementById('share-idea-instruction').textContent = t.shareIdeaInstruction;
+            document.getElementById('idea-label').textContent = t.ideaLabel;
+            document.getElementById('idea-text').placeholder = lang === 'en' ? "e.g., Organize a community clean-up, start a local composting program..." : "";
+            document.getElementById('idea-name-label').textContent = t.ideaNameLabel;
+            document.getElementById('idea-name').placeholder = lang === 'en' ? "Anonymous" : "";
+            document.getElementById('submit-idea-btn').textContent = t.submitIdeaBtn;
+            document.getElementById('ideas-shared-title').textContent = t.ideasSharedTitle;
+            document.getElementById('no-ideas-yet').textContent = t.noIdeasYet;
+
+            // Survey Section
+            document.getElementById('survey-title').innerHTML = `<svg class="w-9 h-9 mr-3 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14h.007a.007.007 0 01.007.007L10 14h.007a.007.007 0 01.007.007V10a6 6 0 018 0zM4.243 4.243a6 6 0 00-.007 7.743L6 14h-.007a.007.007 0 01-.007.007L4 14h.007a.007.007 0 01.007.007V10a6 6 0 00-8 0z" clipRule="evenodd"></path></svg>${t.surveyTitle}`;
+            document.getElementById('survey-instructions').textContent = t.surveyInstructions;
+            document.getElementById('survey-name-label').textContent = t.surveyNameLabel;
+            document.getElementById('name').placeholder = t.surveyNamePlaceholder;
+            document.getElementById('survey-place-label').textContent = t.surveyPlaceLabel;
+            document.getElementById('place').placeholder = t.surveyPlacePlaceholder;
+            document.getElementById('survey-helpfulness-label').textContent = t.surveyHelpfulness;
+            document.getElementById('survey-helpful-option1').textContent = t.surveyHelpfulOption1;
+            document.getElementById('survey-helpful-option2').textContent = t.surveyHelpfulOption2;
+            document.getElementById('survey-helpful-option3').textContent = t.surveyHelpfulOption3;
+            document.getElementById('survey-topics-label').textContent = t.surveyTopics;
+            document.getElementById('topics').placeholder = lang === 'en' ? "e.g., Solar panel installation, government incentives" : "";
+            document.getElementById('survey-feedback-label').textContent = t.surveyFeedback;
+            document.getElementById('feedback').placeholder = lang === 'en' ? "Share your thoughts here..." : "";
+            document.getElementById('survey-submit-btn').textContent = t.surveySubmit;
+            if (surveySubmitted) {
+                document.querySelector('#survey-thanks-message p').textContent = t.surveyThanks;
+            }
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Special handling for placeholder text for non-English languages
+            if (lang !== 'en') {
+                document.getElementById('topics').placeholder = ''; // Clear for non-English
+                document.getElementById('feedback').placeholder = ''; // Clear for non-English
+                document.getElementById('name').placeholder = '';
+                document.getElementById('place').placeholder = '';
+                document.getElementById('idea-text').placeholder = '';
+                document.getElementById('idea-name').placeholder = '';
+            }
+        }
+
+        // Function to change the language
+        function changeLanguage(lang) {
+            currentLang = lang;
+            updateUIForLanguage(currentLang);
+        }
+
+        // --- Interactive Energy Visualizer Logic ---
+        function toggleEnergyVisualizer() {
+            const conventionalScene = document.getElementById('conventional-scene');
+            const cleanScene = document.getElementById('clean-scene');
+            const toggleButton = document.getElementById('toggle-visualizer-btn');
+            const skyColor = document.getElementById('sky-color');
+            const groundColor = document.getElementById('ground-color');
+
+            if (isConventionalEnergy) {
+                // Transition to Clean Energy
+                conventionalScene.classList.remove('visible-element');
+                conventionalScene.classList.add('hidden-element');
+                cleanScene.classList.remove('hidden-element');
+                cleanScene.classList.add('visible-element');
+
+                skyColor.setAttribute('fill', '#87CEEB'); // Brighter sky blue
+                groundColor.setAttribute('fill', '#228B22'); // Green ground
+
+                toggleButton.textContent = translations[currentLang].visualizerButtonClean;
+            } else {
+                // Transition to Conventional Energy
+                conventionalScene.classList.remove('hidden-element');
+                conventionalScene.classList.add('visible-element');
+                cleanScene.classList.remove('visible-element');
+                cleanScene.classList.add('hidden-element');
+
+                skyColor.setAttribute('fill', '#ADD8E6'); // Light blue sky
+                groundColor.setAttribute('fill', '#8B4513'); // Brown ground
+
+                toggleButton.textContent = translations[currentLang].visualizerButtonConventional;
+            }
+            isConventionalEnergy = !isConventionalEnergy;
+        }
+
+
+        // --- Share Your Green Idea! Logic ---
+        function handleIdeaSubmit(event) {
+            event.preventDefault();
+            const ideaText = document.getElementById('idea-text').value.trim();
+            const ideaName = document.getElementById('idea-name').value.trim();
+            const ideasList = document.getElementById('ideas-list');
+            const noIdeasYet = document.getElementById('no-ideas-yet');
+
+            if (ideaText) {
+                const listItem = document.createElement('li');
+                listItem.className = 'bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200';
+                listItem.innerHTML = `<p class="text-gray-800 italic">"${ideaText}" <span class="font-semibold text-gray-600">- ${ideaName || translations[currentLang].ideaNamePlaceholder}</span></p>`;
+                ideasList.prepend(listItem); // Add new idea to the top
+
+                document.getElementById('idea-text').value = ''; // Clear textarea
+                document.getElementById('idea-name').value = ''; // Clear name field
+
+                if (!noIdeasYet.classList.contains('hidden')) {
+                    noIdeasYet.classList.add('hidden'); // Hide "No ideas yet" message
+                }
+            }
+        }
+
+
+        // Handle survey form submission
+        function handleSurveySubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const surveyData = {};
+            for (let [key, value] of formData.entries()) {
+                surveyData[key] = value;
+            }
+
+            // In a real application, you would send this data to a backend/database (e.g., Firestore)
+            console.log("Survey Submitted:", surveyData);
+
+            surveySubmitted = true;
+            document.getElementById('survey-content-wrapper').classList.add('hidden'); // Hide the form
+            document.getElementById('survey-thanks-message').classList.remove('hidden'); // Show thank you
+            document.querySelector('#survey-thanks-message p').textContent = translations[currentLang].surveyThanks;
+        }
+
+        // Event Listeners on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial UI update based on default language
+            updateUIForLanguage(currentLang);
+
+            // Set up idea form submission listener
+            document.getElementById('idea-form').addEventListener('submit', handleIdeaSubmit);
+
+            // Set up survey form submission listener
+            document.getElementById('survey-form').addEventListener('submit', handleSurveySubmit);
+        });
+
+    </script>
+</body>
+</html>
